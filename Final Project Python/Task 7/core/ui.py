@@ -1,5 +1,5 @@
 # UI.py
-import sys, json, uuid
+import sys, json, uuid, csv, os
 from datetime import datetime, date
 from typing import Optional, List, Dict, Tuple
 
@@ -9,15 +9,16 @@ from PySide6.QtWidgets import (
     QSpinBox, QPlainTextEdit, QPushButton, QMessageBox, QTabWidget, QCheckBox,
     QInputDialog, QDialog, QDialogButtonBox, QFileDialog, QComboBox,
     QDateTimeEdit, QDateEdit, QToolBar, QStyle, QMenu, QAbstractItemView,
-    QTableView, QHeaderView, QStatusBar
+    QTableView, QHeaderView, QStatusBar, QRadioButton, QGridLayout
 )
 from PySide6.QtCore import (
     Qt, QDateTime, QDate, QObject, Signal, QSettings, QAbstractTableModel,
-    QModelIndex, QSortFilterProxyModel, QByteArray, QMimeData
+    QModelIndex, QSortFilterProxyModel, QByteArray, QMimeData, QLocale, QTimer, QUrl
 )
 from PySide6.QtGui import (
-    QFont, QPalette, QColor, QBrush, QAction, QShortcut, QKeySequence
+    QFont, QPalette, QColor, QBrush, QAction, QShortcut, QKeySequence, QIcon, QTextDocument, QDesktopServices
 )
+from PySide6.QtPrintSupport import QPrinter, QPrintDialog
 
 # Charts (optional)
 try:
@@ -33,6 +34,9 @@ from hospital import Hospital
 from department import Department
 from patient import Patient
 from staff import Staff
+
+
+APP_VERSION = "1.1.0"
 
 
 # ================= I18N =================
@@ -51,6 +55,15 @@ class I18nManager(QObject):
             "menu.file.open": {"ar": "فتح...", "en": "Open..."},
             "menu.file.save": {"ar": "حفظ", "en": "Save"},
             "menu.file.saveas": {"ar": "حفظ باسم...", "en": "Save As..."},
+            "menu.file.export": {"ar": "تصدير", "en": "Export"},
+            "menu.file.export.patients_current": {"ar": "المرضى (القسم الحالي) CSV", "en": "Patients (current department) CSV"},
+            "menu.file.export.patients_all": {"ar": "المرضى (كل الأقسام) CSV", "en": "Patients (all departments) CSV"},
+            "menu.file.export.staff_current": {"ar": "الطاقم (القسم الحالي) CSV", "en": "Staff (current department) CSV"},
+            "menu.file.export.staff_all": {"ar": "الطاقم (كل الأقسام) CSV", "en": "Staff (all departments) CSV"},
+            "menu.file.export.appts_filtered": {"ar": "المواعيد (حسب التصفية) CSV", "en": "Appointments (filtered) CSV"},
+            "menu.help": {"ar": "مساعدة", "en": "Help"},
+            "menu.help.about": {"ar": "حول التطبيق", "en": "About"},
+
             "menu.language": {"ar": "اللغة", "en": "Language"},
             "menu.language.ar": {"ar": "العربية", "en": "Arabic"},
             "menu.language.en": {"ar": "الإنجليزية", "en": "English"},
@@ -89,6 +102,36 @@ class I18nManager(QObject):
             "label.staff_count:": {"ar": "عدد الطاقم:", "en": "Staff:"},
             "unit.years": {"ar": "سنة", "en": "yr"},
 
+            # Patients/Staff forms
+            "group.add_patient": {"ar": "إضافة بيانات المريض", "en": "Add patient info"},
+            "field.age": {"ar": "العمر", "en": "Age"},
+            "field.medical_record": {"ar": "السجل الطبي", "en": "Medical Record"},
+            "btn.add_patient": {"ar": "إضافة مريض", "en": "Add Patient"},
+            "group.add_staff": {"ar": "إضافة موظف", "en": "Add Staff"},
+            "field.position": {"ar": "المنصب", "en": "Position"},
+            "btn.add_staff": {"ar": "إضافة موظف", "en": "Add Staff"},
+            "ph.medical_record": {"ar": "اكتب الملاحظات الطبية...", "en": "Enter medical notes..."},
+            "ph.position_hint": {"ar": "مثل: طبيب قلب، ممرضة، فني", "en": "e.g., Cardiologist, Nurse, Technician"},
+            "ph.patient_name": {"ar": "أدخل الاسم الكامل", "en": "Enter full name"},
+            "ph.staff_name": {"ar": "أدخل الاسم الكامل", "en": "Enter full name"},
+            "ph.dept_name": {"ar": "اسم القسم...", "en": "Department name..."},
+            "ph.appt_notes": {"ar": "ملاحظات (اختياري)...", "en": "Notes (optional)..."},
+
+            # Patient details dialog
+            "dialog.patient_details.title": {"ar": "تفاصيل المريض - {id}", "en": "Patient details - {id}"},
+            "label.patient_id:": {"ar": "رقم المريض:", "en": "Patient ID:"},
+            "label.state:": {"ar": "الحالة:", "en": "Status:"},
+            "label.admission_date:": {"ar": "تاريخ الدخول:", "en": "Admission date:"},
+            "label.discharge_date:": {"ar": "تاريخ الخروج:", "en": "Discharge date:"},
+            "btn.discharge": {"ar": "إخراج", "en": "Discharge"},
+            "btn.save": {"ar": "حفظ", "en": "Save"},
+            "btn.close": {"ar": "إغلاق", "en": "Close"},
+            "btn.print": {"ar": "طباعة", "en": "Print"},
+            "btn.export_pdf": {"ar": "تصدير PDF", "en": "Export PDF"},
+            "btn.discharge_selected": {"ar": "إخراج المحددين", "en": "Discharge selected"},
+            "chk.only_active": {"ar": "النشطون", "en": "Active"},
+            "btn.refresh": {"ar": "تحديث", "en": "Refresh"},
+
             # Patients columns/ctx
             "col.pat.pid": {"ar": "Patient ID", "en": "Patient ID"},
             "col.pat.name": {"ar": "الاسم", "en": "Name"},
@@ -103,6 +146,8 @@ class I18nManager(QObject):
             "ctx.p.copyid": {"ar": "نسخ Patient ID", "en": "Copy Patient ID"},
             "ctx.p.discharge_sel": {"ar": "خروج المحددين", "en": "Discharge selected"},
             "ctx.p.move_sel": {"ar": "نقل المحددين إلى قسم...", "en": "Move selected to department..."},
+            "ctx.p.print": {"ar": "طباعة السجل", "en": "Print record"},
+            "ctx.p.export_pdf": {"ar": "تصدير السجل PDF", "en": "Export record PDF"},
 
             # Staff columns/ctx
             "col.stf.sid": {"ar": "Staff ID", "en": "Staff ID"},
@@ -116,9 +161,16 @@ class I18nManager(QObject):
             "staff.inactive": {"ar": "موقّف", "en": "Inactive"},
 
             # Search tab
-            "group.search": {"ar": "بحث عن مريض في كل الأقسام", "en": "Search patient across all departments"},
+            "group.search": {"ar": "بحث متقدم", "en": "Advanced search"},
             "search.field.label": {"ar": "كلمة البحث", "en": "Search term"},
-            "ph.search_all": {"ar": "اكتب اسم المريض أو Patient ID", "en": "Type patient name or Patient ID"},
+            "ph.search_all": {"ar": "اكتب اسم أو ID ...", "en": "Type a name or ID ..."},
+            "search.mode.patients": {"ar": "مرضى", "en": "Patients"},
+            "search.mode.staff": {"ar": "طاقم", "en": "Staff"},
+            "filter.pat_status": {"ar": "حالة المريض", "en": "Patient status"},
+            "filter.staff_status": {"ar": "حالة الموظف", "en": "Staff status"},
+            "filter.age_min": {"ar": "العمر الأدنى", "en": "Min age"},
+            "filter.age_max": {"ar": "العمر الأقصى", "en": "Max age"},
+            "label.results_count": {"ar": "النتائج: {n}", "en": "Results: {n}"},
 
             # Appointments tab
             "group.create_appt": {"ar": "إنشاء موعد", "en": "Create appointment"},
@@ -168,19 +220,28 @@ class I18nManager(QObject):
             "msg.warning.title": {"ar": "تنبيه", "en": "Warning"},
             "msg.error.title": {"ar": "خطأ", "en": "Error"},
             "msg.confirm.title": {"ar": "تأكيد", "en": "Confirm"},
+            "msg.about.title": {"ar": "حول التطبيق", "en": "About"},
 
             # Messages (content)
             "msg.new.confirm": {"ar": "بدء ملف جديد؟ قد تفقد تغييرات غير محفوظة.", "en": "Start new file? Unsaved changes may be lost."},
             "dialog.open.title": {"ar": "فتح ملف بيانات", "en": "Open data file"},
             "dialog.save.title": {"ar": "حفظ الملف", "en": "Save file"},
+            "dialog.export.csv.title": {"ar": "تصدير CSV", "en": "Export CSV"},
+            "dialog.export.pdf.title": {"ar": "تصدير PDF", "en": "Export PDF"},
             "dialog.json.filter": {"ar": "JSON (*.json)", "en": "JSON (*.json)"},
+            "dialog.csv.filter": {"ar": "CSV (*.csv)", "en": "CSV (*.csv)"},
+            "dialog.pdf.filter": {"ar": "PDF (*.pdf)", "en": "PDF (*.pdf)"},
             "msg.loaded_ok": {"ar": "تم تحميل البيانات بنجاح", "en": "Data loaded successfully"},
             "msg.open.fail": {"ar": "فشل التحميل:\n{err}", "en": "Failed to load:\n{err}"},
             "msg.save.ok": {"ar": "تم الحفظ", "en": "Saved"},
             "msg.save.fail": {"ar": "فشل الحفظ:\n{err}", "en": "Failed to save:\n{err}"},
+            "msg.export.ok": {"ar": "تم التصدير", "en": "Exported"},
+            "msg.export.fail": {"ar": "فشل التصدير:\n{err}", "en": "Failed to export:\n{err}"},
 
             "msg.select_department_first": {"ar": "اختار قسم أولًا", "en": "Select a department first"},
             "msg.patient.name_required": {"ar": "اسم المريض مطلوب", "en": "Patient name is required"},
+            "msg.dept.name_required": {"ar": "اسم القسم مطلوب", "en": "Department name is required"},
+            "msg.validation.fix_fields": {"ar": "يرجى تصحيح الحقول المظللة", "en": "Please fix the highlighted fields"},
             "msg.dept.full": {"ar": "لا يمكن إدخال {name}، القسم ممتلئ", "en": "Cannot admit {name}, department is full"},
             "msg.patient.added": {"ar": "تم إدخال المريض: {pid}", "en": "Patient admitted: {pid}"},
             "msg.select_patient": {"ar": "اختار مريض من القائمة", "en": "Select a patient from the list"},
@@ -211,6 +272,25 @@ class I18nManager(QObject):
             "msg.appt.conflict.row": {"ar": "- #{id} | {dept} | {start}-{end} | {who}", "en": "- #{id} | {dept} | {start}-{end} | {who}"},
             "who.patient": {"ar": "نفس المريض", "en": "same patient"},
             "who.staff": {"ar": "نفس الموظف", "en": "same staff"},
+
+            # Confirmations
+            "confirm.discharge.title": {"ar": "تأكيد الخروج", "en": "Confirm discharge"},
+            "confirm.discharge.body": {"ar": "هل تريد إخراج {n} مريض(ة)؟", "en": "Discharge {n} patient(s)?"},
+            "confirm.delete_appt.title": {"ar": "تأكيد الحذف", "en": "Confirm delete"},
+            "confirm.delete_appt.body": {"ar": "حذف {n} موعد(ًا)؟", "en": "Delete {n} appointment(s)?"},
+            "chk.dont_ask_again": {"ar": "لا تسألني مرة أخرى", "en": "Don't ask again"},
+
+            # About
+            "about.body": {
+                "ar": "<b>إدارة المستشفى</b><br/>الإصدار {ver}<br/><br/>مشروع تعليمي يعتمد على PySide6.<br/>المصدر: <a href='https://qt.io'>Qt</a>",
+                "en": "<b>Hospital Management</b><br/>Version {ver}<br/><br/>A learning project built with PySide6.<br/>Powered by <a href='https://qt.io'>Qt</a>"
+            },
+
+            # Empty states
+            "empty.no_dept": {"ar": "اختر قسمًا للبدء", "en": "Select a department to begin"},
+            "empty.patients": {"ar": "لا يوجد مرضى في هذا القسم", "en": "No patients in this department"},
+            "empty.staff": {"ar": "لا يوجد طاقم في هذا القسم", "en": "No staff in this department"},
+            "empty.appts": {"ar": "لا توجد مواعيد مطابقة للتصفية", "en": "No appointments match your filters"},
         }
 
     def t(self, key: str, **kwargs) -> str:
@@ -341,6 +421,15 @@ def dt_to_str(dt: Optional[datetime]) -> Optional[str]:
 
 def dt_from_str(s: Optional[str]) -> Optional[datetime]:
     return datetime.fromisoformat(s) if s else None
+
+def fmt_dt(dt: Optional[datetime], time_only: bool = False) -> str:
+    if not dt:
+        return "-"
+    qdt = QDateTime.fromSecsSinceEpoch(int(dt.timestamp()))
+    loc = QLocale()
+    if time_only:
+        return loc.toString(qdt.time(), QLocale.ShortFormat)
+    return loc.toString(qdt, QLocale.ShortFormat)
 
 
 # ================= JSON Serializer =================
@@ -626,7 +715,7 @@ class PatientTableModel(QAbstractTableModel):
             if col == "name": return p.name
             if col == "age": return str(p.age)
             if col == "status": return I18N.t("status.discharged") if p.is_discharged else I18N.t("status.admitted")
-            if col == "adm": return getattr(p, "admission_date", None).strftime("%Y-%m-%d %H:%M") if getattr(p, "admission_date", None) else "-"
+            if col == "adm": return fmt_dt(getattr(p, "admission_date", None))
         if role == Qt.UserRole:
             return p
         return None
@@ -750,12 +839,12 @@ class AppointmentsTableModel(QAbstractTableModel):
             if col == "dept": return a.dept_name
             if col == "patient":
                 p = self.appts.patient_of(a)
-                return f"{p.patient_id} - {p.name}" if p else "(N/A)"
+                return f"{getattr(p, 'patient_id', '')} - {getattr(p, 'name', '(N/A)')}" if p else "(N/A)"
             if col == "staff":
                 s = self.appts.staff_of(a)
                 return f"{s.staff_id} - {s.name}" if s else I18N.t("filter.all")
-            if col == "start": return a.start.strftime("%Y-%m-%d %H:%M")
-            if col == "end": return a.end.strftime("%Y-%m-%d %H:%M")
+            if col == "start": return fmt_dt(a.start)
+            if col == "end": return fmt_dt(a.end)
             if col == "status": return AppointmentStatus.label(a.status)
             if col == "notes": return a.notes or ""
             if col == "conflict":
@@ -774,7 +863,7 @@ class AppointmentsTableModel(QAbstractTableModel):
                     if "staff" in reasons: who.append(I18N.t("who.staff"))
                     joiner = " & " if I18N.lang == "en" else " و "
                     who_s = joiner.join(who)
-                    lines.append(f"#{c.id} | {c.dept_name} | {c.start.strftime('%H:%M')}-{c.end.strftime('%H:%M')} | {who_s}")
+                    lines.append(f"#{c.id} | {c.dept_name} | {fmt_dt(c.start, time_only=True)}-{fmt_dt(c.end, time_only=True)} | {who_s}")
                 return "\n".join(lines)
         if role == Qt.BackgroundRole:
             if self.data(index.siblingAtColumn(self.COLS.index("conflict")), Qt.DisplayRole) == "⚠":
@@ -837,8 +926,8 @@ class PatientDetailsDialog(QDialog):
         info_form = QFormLayout(info_box)
         self.lbl_adm_label = QLabel("")
         self.lbl_dis_label = QLabel("")
-        self.adm_val = QLabel(str(getattr(patient, "admission_date", "-")))
-        self.dis_val = QLabel(str(getattr(patient, "discharge_date", "-")) if patient.is_discharged else "-")
+        self.adm_val = QLabel(fmt_dt(getattr(patient, "admission_date", None)))
+        self.dis_val = QLabel(fmt_dt(getattr(patient, "discharge_date", None)) if patient.is_discharged else "-")
         info_form.addRow(self.lbl_adm_label, self.adm_val)
         info_form.addRow(self.lbl_dis_label, self.dis_val)
         form.addRow(info_box)
@@ -846,12 +935,16 @@ class PatientDetailsDialog(QDialog):
         buttons = QDialogButtonBox()
         self.btn_save = buttons.addButton("", QDialogButtonBox.AcceptRole)
         self.btn_close = buttons.addButton("", QDialogButtonBox.RejectRole)
+        self.btn_print = buttons.addButton("", QDialogButtonBox.ActionRole)
+        self.btn_export_pdf = buttons.addButton("", QDialogButtonBox.ActionRole)
         self.btn_discharge = None
         if not patient.is_discharged:
             self.btn_discharge = buttons.addButton("", QDialogButtonBox.DestructiveRole)
 
         self.btn_save.clicked.connect(self.handle_save)
         self.btn_close.clicked.connect(self.reject)
+        self.btn_print.clicked.connect(self.handle_print)
+        self.btn_export_pdf.clicked.connect(self.handle_export_pdf)
         if self.btn_discharge:
             self.btn_discharge.clicked.connect(self.handle_discharge)
 
@@ -878,6 +971,8 @@ class PatientDetailsDialog(QDialog):
             self.btn_discharge.setText(I18N.t("btn.discharge"))
         self.btn_save.setText(I18N.t("btn.save"))
         self.btn_close.setText(I18N.t("btn.close"))
+        self.btn_print.setText(I18N.t("btn.print"))
+        self.btn_export_pdf.setText(I18N.t("btn.export_pdf"))
 
     def handle_save(self):
         name = self.name_in.text().strip()
@@ -894,7 +989,27 @@ class PatientDetailsDialog(QDialog):
         except Exception as e:
             QMessageBox.critical(self, I18N.t("msg.error.title"), str(e))
 
+    def _confirm_discharge_if_needed(self, count: int) -> bool:
+        s = QSettings("HospitalApp", "UI")
+        ask = s.value("confirm_discharge", "yes")
+        if str(ask) != "no":
+            box = QMessageBox(self)
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle(I18N.t("confirm.discharge.title"))
+            box.setText(I18N.t("confirm.discharge.body", n=count))
+            cb = QCheckBox(I18N.t("chk.dont_ask_again"), box)
+            box.setCheckBox(cb)
+            box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            res = box.exec()
+            if res != QMessageBox.Yes:
+                return False
+            if cb.isChecked():
+                s.setValue("confirm_discharge", "no")
+        return True
+
     def handle_discharge(self):
+        if not self._confirm_discharge_if_needed(1):
+            return
         notes, ok = QInputDialog.getMultiLineText(self, I18N.t("dialog.discharge.notes_title"),
                                                   I18N.t("dialog.discharge.notes_prompt"), "")
         if not ok:
@@ -907,6 +1022,50 @@ class PatientDetailsDialog(QDialog):
             self.accept()
         except Exception as e:
             QMessageBox.critical(self, I18N.t("msg.error.title"), str(e))
+
+    def _build_patient_html(self) -> str:
+        p = self.patient
+        return f"""
+        <html><head><meta charset="utf-8"></head>
+        <body>
+        <h2>Patient Record</h2>
+        <p><b>ID:</b> {p.patient_id}<br/>
+        <b>Name:</b> {p.name}<br/>
+        <b>Age:</b> {p.age}<br/>
+        <b>Status:</b> {"Discharged" if p.is_discharged else "Admitted"}<br/>
+        <b>Admission:</b> {fmt_dt(getattr(p,"admission_date", None))}<br/>
+        <b>Discharge:</b> {fmt_dt(getattr(p,"discharge_date", None)) if p.is_discharged else "-"}</p>
+        <h3>Medical Record</h3>
+        <pre>{p.medical_record}</pre>
+        </body></html>
+        """
+
+    def handle_print(self):
+        doc = QTextDocument()
+        doc.setHtml(self._build_patient_html())
+        printer = QPrinter(QPrinter.HighResolution)
+        dlg = QPrintDialog(printer, self)
+        if dlg.exec():
+            doc.print(printer)
+
+    def handle_export_pdf(self):
+        path, _ = QFileDialog.getSaveFileName(self, I18N.t("dialog.export.pdf.title"),
+                                              f"{self.patient.patient_id}.pdf",
+                                              I18N.t("dialog.pdf.filter"))
+        if not path:
+            return
+        if not path.lower().endswith(".pdf"):
+            path += ".pdf"
+        try:
+            doc = QTextDocument()
+            doc.setHtml(self._build_patient_html())
+            printer = QPrinter(QPrinter.HighResolution)
+            printer.setOutputFormat(QPrinter.PdfFormat)
+            printer.setOutputFileName(path)
+            doc.print(printer)
+            QMessageBox.information(self, I18N.t("msg.info.title"), I18N.t("msg.export.ok"))
+        except Exception as e:
+            QMessageBox.critical(self, I18N.t("msg.error.title"), I18N.t("msg.export.fail", err=e))
 
 
 # ================= Dept list drop target =================
@@ -963,12 +1122,24 @@ class HospitalWindow(QMainWindow):
         self._build_menu()
         self._build_toolbar()
         self._build_shortcuts()
+        self._apply_app_icon()
 
         I18N.language_changed.connect(self._on_lang)
         THEME.theme_changed.connect(self._on_theme_changed)
         self.retranslate_ui()
         self._on_theme_changed(THEME.theme)
         self.setStatusBar(QStatusBar())
+
+        # Restore window geometry/state
+        self._restore_window_state()
+
+    def _apply_app_icon(self):
+        # Try custom icon, fallback to standard
+        icon_path = os.path.join(os.path.dirname(__file__), "assets", "app_icon.png")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+        else:
+            self.setWindowIcon(self.style().standardIcon(QStyle.SP_ComputerIcon))
 
     def _build_menu(self):
         menubar = self.menuBar()
@@ -977,10 +1148,24 @@ class HospitalWindow(QMainWindow):
         self.act_open = self.file_menu.addAction("")
         self.act_save = self.file_menu.addAction("")
         self.act_save_as = self.file_menu.addAction("")
+        self.file_menu.addSeparator()
+        self.export_menu = self.file_menu.addMenu("")
+        self.act_export_pat_cur = self.export_menu.addAction("")
+        self.act_export_pat_all = self.export_menu.addAction("")
+        self.act_export_stf_cur = self.export_menu.addAction("")
+        self.act_export_stf_all = self.export_menu.addAction("")
+        self.export_menu.addSeparator()
+        self.act_export_appts = self.export_menu.addAction("")
+
         self.act_new.triggered.connect(self.handle_new)
         self.act_open.triggered.connect(self.handle_open)
         self.act_save.triggered.connect(self.handle_save)
         self.act_save_as.triggered.connect(self.handle_save_as)
+        self.act_export_pat_cur.triggered.connect(lambda: self.page.export_patients_csv(all_depts=False))
+        self.act_export_pat_all.triggered.connect(lambda: self.page.export_patients_csv(all_depts=True))
+        self.act_export_stf_cur.triggered.connect(lambda: self.page.export_staff_csv(all_depts=False))
+        self.act_export_stf_all.triggered.connect(lambda: self.page.export_staff_csv(all_depts=True))
+        self.act_export_appts.triggered.connect(self.page.export_appts_csv_filtered)
 
         self.lang_menu = menubar.addMenu("")
         self.act_lang_ar = self.lang_menu.addAction("")
@@ -995,6 +1180,10 @@ class HospitalWindow(QMainWindow):
         self.act_theme_dark.setCheckable(True)
         self.act_theme_light.triggered.connect(lambda: THEME.set_theme("light"))
         self.act_theme_dark.triggered.connect(lambda: THEME.set_theme("dark"))
+
+        self.help_menu = menubar.addMenu("")
+        self.act_about = self.help_menu.addAction("")
+        self.act_about.triggered.connect(self.show_about_dialog)
 
     def _build_toolbar(self):
         tb = QToolBar("Main")
@@ -1031,6 +1220,11 @@ class HospitalWindow(QMainWindow):
         QShortcut(QKeySequence("Ctrl+T"), self, activated=lambda: THEME.set_theme("dark" if THEME.theme=="light" else "light"))
 
     def _on_lang(self, lang: str):
+        # Locale update
+        if lang == "ar":
+            QLocale.setDefault(QLocale(QLocale.Arabic))
+        else:
+            QLocale.setDefault(QLocale(QLocale.English))
         self.setLayoutDirection(Qt.RightToLeft if lang == "ar" else Qt.LeftToRight)
         self.retranslate_ui()
         self.page.retranslate_ui()
@@ -1050,16 +1244,33 @@ class HospitalWindow(QMainWindow):
         self.act_open.setText(I18N.t("menu.file.open"))
         self.act_save.setText(I18N.t("menu.file.save"))
         self.act_save_as.setText(I18N.t("menu.file.saveas"))
+        self.export_menu.setTitle(I18N.t("menu.file.export"))
+        self.act_export_pat_cur.setText(I18N.t("menu.file.export.patients_current"))
+        self.act_export_pat_all.setText(I18N.t("menu.file.export.patients_all"))
+        self.act_export_stf_cur.setText(I18N.t("menu.file.export.staff_current"))
+        self.act_export_stf_all.setText(I18N.t("menu.file.export.staff_all"))
+        self.act_export_appts.setText(I18N.t("menu.file.export.appts_filtered"))
+
         self.lang_menu.setTitle(I18N.t("menu.language"))
         self.act_lang_ar.setText(I18N.t("menu.language.ar"))
         self.act_lang_en.setText(I18N.t("menu.language.en"))
         self.theme_menu.setTitle(I18N.t("menu.theme"))
         self.act_theme_light.setText(I18N.t("menu.theme.light"))
         self.act_theme_dark.setText(I18N.t("menu.theme.dark"))
+        self.help_menu.setTitle(I18N.t("menu.help"))
+        self.act_about.setText(I18N.t("menu.help.about"))
+        
         self.tb_save.setText(I18N.t("toolbar.save"))
         self.tb_add_patient.setText(I18N.t("toolbar.add_patient"))
         self.tb_add_appt.setText(I18N.t("toolbar.add_appt"))
         self.tb_refresh.setText(I18N.t("toolbar.refresh"))
+
+    def show_about_dialog(self):
+        # Simple About dialog using QMessageBox with rich text
+        text = I18N.t("about.body", ver=APP_VERSION)
+        QMessageBox.about(self, I18N.t("msg.about.title"), text)
+        # Allow links to open
+        QDesktopServices.openUrl(QUrl("https://qt.io"))
 
     # ----- File ops -----
     def handle_new(self):
@@ -1114,9 +1325,24 @@ class HospitalWindow(QMainWindow):
         self.setCentralWidget(self.page)
         self.retranslate_ui()
 
+    def _restore_window_state(self):
+        s = QSettings("HospitalApp", "UI")
+        geom = s.value("window_geometry")
+        st = s.value("window_state")
+        if isinstance(geom, QByteArray):
+            self.restoreGeometry(geom)
+        if isinstance(st, QByteArray):
+            self.restoreState(st)
+
+    def _save_window_state(self):
+        s = QSettings("HospitalApp", "UI")
+        s.setValue("window_geometry", self.saveGeometry())
+        s.setValue("window_state", self.saveState())
+
     def closeEvent(self, e):
         try:
             self.page.save_layouts()
+            self._save_window_state()
         except Exception:
             pass
         super().closeEvent(e)
@@ -1137,8 +1363,8 @@ class MainPage(QWidget):
     # ---------- UI build ----------
     def _build_ui(self):
         root = QHBoxLayout(self)
-        splitter = QSplitter(Qt.Horizontal)
-        root.addWidget(splitter)
+        self.splitter = QSplitter(Qt.Horizontal)
+        root.addWidget(self.splitter)
 
         # Left: Departments
         left_widget = QWidget()
@@ -1152,6 +1378,7 @@ class MainPage(QWidget):
         self.add_dept_group = QGroupBox("")
         self.add_dept_form = QFormLayout(self.add_dept_group)
         self.dept_name_in = QLineEdit()
+        self.dept_name_in.setPlaceholderText(I18N.t("ph.dept_name"))
         self.dept_cap_in = QSpinBox(); self.dept_cap_in.setRange(10, 2000); self.dept_cap_in.setValue(50)
         self.btn_add_dept = QPushButton("")
         self.btn_add_dept.clicked.connect(self.handle_add_department)
@@ -1160,6 +1387,9 @@ class MainPage(QWidget):
         self.add_dept_form.addRow(self.add_dept_form_label_name, self.dept_name_in)
         self.add_dept_form.addRow(self.add_dept_form_label_cap, self.dept_cap_in)
         self.add_dept_form.addRow(self.btn_add_dept)
+
+        # live clear invalid on typing
+        self.dept_name_in.textChanged.connect(lambda _: self.clear_invalid(self.dept_name_in))
 
         left_layout.addWidget(self.lbl_depts)
         left_layout.addWidget(self.dept_list, 1)
@@ -1197,11 +1427,13 @@ class MainPage(QWidget):
         right_layout.addWidget(self.info_group)
         right_layout.addWidget(self.tabs, 1)
 
-        splitter.addWidget(left_widget)
-        splitter.addWidget(right_widget)
-        splitter.setSizes([320, 1030])
+        self.splitter.addWidget(left_widget)
+        self.splitter.addWidget(right_widget)
+        self.splitter.setSizes([320, 1030])
 
         self.refresh_department_list()
+        # Restore splitter state if saved
+        self.restore_splitter_state(self.splitter, "main_splitter_state")
 
     # ---------- Dashboard ----------
     def _build_dashboard_tab(self):
@@ -1297,6 +1529,7 @@ class MainPage(QWidget):
         self.add_patient_group = QGroupBox("")
         form = QFormLayout(self.add_patient_group)
         self.p_name_in = QLineEdit()
+        self.p_name_in.setPlaceholderText(I18N.t("ph.patient_name"))
         self.p_age_in = QSpinBox(); self.p_age_in.setRange(1, 120)
         self.p_med_rec_in = QPlainTextEdit()
         self.btn_add_patient = QPushButton("")
@@ -1304,10 +1537,15 @@ class MainPage(QWidget):
         self.add_patient_label_name = QLabel("")
         self.add_patient_label_age = QLabel("")
         self.add_patient_label_med = QLabel("")
+        self.add_patient_label_name.setBuddy(self.p_name_in)
+        self.add_patient_label_age.setBuddy(self.p_age_in)
+        self.add_patient_label_med.setBuddy(self.p_med_rec_in)
         form.addRow(self.add_patient_label_name, self.p_name_in)
         form.addRow(self.add_patient_label_age, self.p_age_in)
         form.addRow(self.add_patient_label_med, self.p_med_rec_in)
         form.addRow(self.btn_add_patient)
+
+        self.p_name_in.textChanged.connect(lambda _: self.clear_invalid(self.p_name_in))
 
         self.p_model = PatientTableModel(None, self)
         self.p_proxy = ContainsFilterProxy(self)
@@ -1321,13 +1559,42 @@ class MainPage(QWidget):
         self.p_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.p_table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.p_table.customContextMenuRequested.connect(self.on_patients_context)
+        self.p_table.doubleClicked.connect(self.on_patient_double_click)
         self.p_table.setDragEnabled(True)
+        self.p_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.p_table.setSortingEnabled(True)
         self.restore_header_state(self.p_table, "patients_header_state")
 
         layout.addWidget(self.add_patient_group)
         layout.addWidget(self.p_table, 1)
 
+        # Empty overlay for patients table
+        self.p_empty = QLabel(self.p_table.viewport())
+        self.p_empty.setAlignment(Qt.AlignCenter)
+        self.p_empty.setStyleSheet("color: #888;")
+        self.p_empty.hide()
+
+        # Keyboard shortcuts for data entry in this tab
+        QShortcut(QKeySequence("Alt+N"), tab, activated=lambda: self.p_name_in.setFocus())
+        QShortcut(QKeySequence("Alt+A"), tab, activated=lambda: self.p_age_in.setFocus())
+        QShortcut(QKeySequence("Alt+M"), tab, activated=lambda: self.p_med_rec_in.setFocus())
+
+        # Tab order
+        QWidget.setTabOrder(self.p_name_in, self.p_age_in)
+        QWidget.setTabOrder(self.p_age_in, self.p_med_rec_in)
+        QWidget.setTabOrder(self.p_med_rec_in, self.btn_add_patient)
+
         self.tab_idx_patients = self.tabs.addTab(tab, "")
+
+    def on_patient_double_click(self, idx: QModelIndex):
+        if not idx.isValid():
+            return
+        p = self.p_proxy.index(idx.row(), 0).data(Qt.UserRole)
+        if p:
+            dlg = PatientDetailsDialog(p, self)
+            if dlg.exec():
+                self.p_model.layoutChanged.emit()
+                self.refresh_patients_table_related()
 
     def on_patients_context(self, pos):
         idxs = self.p_table.selectionModel().selectedRows()
@@ -1336,8 +1603,13 @@ class MainPage(QWidget):
         a_discharge = menu.addAction(I18N.t("ctx.p.discharge") if len(idxs)==1 else I18N.t("ctx.p.discharge_sel"))
         a_move = menu.addAction(I18N.t("ctx.p.move") if len(idxs)==1 else I18N.t("ctx.p.move_sel"))
         a_copy = None
+        a_print = None
+        a_pdf = None
         if len(idxs)==1:
             a_copy = menu.addAction(I18N.t("ctx.p.copyid"))
+            menu.addSeparator()
+            a_print = menu.addAction(I18N.t("ctx.p.print"))
+            a_pdf = menu.addAction(I18N.t("ctx.p.export_pdf"))
         act = menu.exec(self.p_table.viewport().mapToGlobal(pos))
         if not act: return
         patients = [self.p_proxy.index(i.row(),0).data(Qt.UserRole) for i in idxs]
@@ -1349,11 +1621,37 @@ class MainPage(QWidget):
             self.discharge_patients(patients)
         elif act == a_move:
             self.move_patients_dialog(patients)
-        elif a_copy and act == a_copy:
+        elif a_copy and act == a_copy and len(patients)==1:
             QApplication.clipboard().setText(patients[0].patient_id)
+        elif a_print and act == a_print and len(patients)==1:
+            dlg = PatientDetailsDialog(patients[0], self)
+            dlg.handle_print()
+        elif a_pdf and act == a_pdf and len(patients)==1:
+            dlg = PatientDetailsDialog(patients[0], self)
+            dlg.handle_export_pdf()
+
+    def _confirm_discharge_if_needed(self, count: int) -> bool:
+        s = QSettings("HospitalApp", "UI")
+        ask = s.value("confirm_discharge", "yes")
+        if str(ask) != "no":
+            box = QMessageBox(self)
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle(I18N.t("confirm.discharge.title"))
+            box.setText(I18N.t("confirm.discharge.body", n=count))
+            cb = QCheckBox(I18N.t("chk.dont_ask_again"), box)
+            box.setCheckBox(cb)
+            box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            res = box.exec()
+            if res != QMessageBox.Yes:
+                return False
+            if cb.isChecked():
+                s.setValue("confirm_discharge", "no")
+        return True
 
     def discharge_patients(self, patients: List[Patient]):
         if not patients: return
+        if not self._confirm_discharge_if_needed(len(patients)):
+            return
         for p in patients:
             if not p.is_discharged:
                 try:
@@ -1402,6 +1700,7 @@ class MainPage(QWidget):
         self.p_model.layoutChanged.emit()
         self.update_dept_info()
         self.refresh_dashboard()
+        self.update_empty_overlays()
 
     # ---------- Staff tab ----------
     def _build_staff_tab(self):
@@ -1411,17 +1710,25 @@ class MainPage(QWidget):
         self.add_staff_group = QGroupBox("")
         form = QFormLayout(self.add_staff_group)
         self.s_name_in = QLineEdit()
+        self.s_name_in.setPlaceholderText(I18N.t("ph.staff_name"))
         self.s_age_in = QSpinBox(); self.s_age_in.setRange(18, 100)
         self.s_position_in = QLineEdit()
+        self.s_position_in.setPlaceholderText(I18N.t("ph.position_hint"))
         self.btn_add_staff = QPushButton("")
         self.btn_add_staff.clicked.connect(self.handle_add_staff)
         self.add_staff_label_name = QLabel("")
         self.add_staff_label_age = QLabel("")
         self.add_staff_label_pos = QLabel("")
+        self.add_staff_label_name.setBuddy(self.s_name_in)
+        self.add_staff_label_age.setBuddy(self.s_age_in)
+        self.add_staff_label_pos.setBuddy(self.s_position_in)
         form.addRow(self.add_staff_label_name, self.s_name_in)
         form.addRow(self.add_staff_label_age, self.s_age_in)
         form.addRow(self.add_staff_label_pos, self.s_position_in)
         form.addRow(self.btn_add_staff)
+
+        self.s_name_in.textChanged.connect(lambda _: self.clear_invalid(self.s_name_in))
+        self.s_position_in.textChanged.connect(lambda _: self.clear_invalid(self.s_position_in))
 
         self.s_model = StaffTableModel(None, self)
         self.s_proxy = ContainsFilterProxy(self)
@@ -1435,10 +1742,28 @@ class MainPage(QWidget):
         self.s_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.s_table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.s_table.customContextMenuRequested.connect(self.on_staff_context)
+        self.s_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.s_table.setSortingEnabled(True)
         self.restore_header_state(self.s_table, "staff_header_state")
 
         layout.addWidget(self.add_staff_group)
         layout.addWidget(self.s_table, 1)
+
+        # Empty overlay
+        self.s_empty = QLabel(self.s_table.viewport())
+        self.s_empty.setAlignment(Qt.AlignCenter)
+        self.s_empty.setStyleSheet("color: #888;")
+        self.s_empty.hide()
+
+        # Shortcuts
+        QShortcut(QKeySequence("Alt+N"), tab, activated=lambda: self.s_name_in.setFocus())
+        QShortcut(QKeySequence("Alt+A"), tab, activated=lambda: self.s_age_in.setFocus())
+        QShortcut(QKeySequence("Alt+P"), tab, activated=lambda: self.s_position_in.setFocus())
+
+        # Tab order
+        QWidget.setTabOrder(self.s_name_in, self.s_age_in)
+        QWidget.setTabOrder(self.s_age_in, self.s_position_in)
+        QWidget.setTabOrder(self.s_position_in, self.btn_add_staff)
 
         self.tab_idx_staff = self.tabs.addTab(tab, "")
 
@@ -1455,7 +1780,7 @@ class MainPage(QWidget):
         staff_list = [self.s_proxy.index(i.row(),0).data(Qt.UserRole) for i in idxs]
         if act == a_toggle:
             for s in staff_list: s.is_active = not s.is_active
-            self.s_model.layoutChanged.emit(); self.refresh_dashboard()
+            self.s_model.layoutChanged.emit(); self.refresh_dashboard(); self.update_empty_overlays()
         elif a_copy and act == a_copy:
             QApplication.clipboard().setText(staff_list[0].staff_id)
 
@@ -1465,18 +1790,73 @@ class MainPage(QWidget):
         layout = QVBoxLayout(tab)
 
         self.search_group = QGroupBox("")
-        form = QFormLayout(self.search_group)
-        self.search_all_in = QLineEdit()
-        self.search_label_term = QLabel("")
-        self.search_all_in.textChanged.connect(self.handle_search_all)
-        form.addRow(self.search_label_term, self.search_all_in)
+        grid = QGridLayout(self.search_group)
 
+        # Mode
+        self.search_mode_pat = QRadioButton(I18N.t("search.mode.patients"))
+        self.search_mode_stf = QRadioButton(I18N.t("search.mode.staff"))
+        self.search_mode_pat.setChecked(True)
+        grid.addWidget(self.search_mode_pat, 0, 0)
+        grid.addWidget(self.search_mode_stf, 0, 1)
+
+        # Common term
+        self.search_label_term = QLabel("")
+        self.search_all_in = QLineEdit()
+        self.search_all_in.setPlaceholderText(I18N.t("ph.search_all"))
+        grid.addWidget(self.search_label_term, 1, 0)
+        grid.addWidget(self.search_all_in, 1, 1, 1, 3)
+
+        # Patient filters
+        self.lbl_pat_status = QLabel("")
+        self.cb_pat_status = QComboBox()
+        self.cb_pat_status.addItem(I18N.t("filter.all"), "__ALL__")
+        self.cb_pat_status.addItem(I18N.t("status.admitted"), "admitted")
+        self.cb_pat_status.addItem(I18N.t("status.discharged"), "discharged")
+
+        self.lbl_age_min = QLabel("")
+        self.lbl_age_max = QLabel("")
+        self.spin_age_min = QSpinBox(); self.spin_age_min.setRange(0, 120); self.spin_age_min.setValue(0)
+        self.spin_age_max = QSpinBox(); self.spin_age_max.setRange(0, 120); self.spin_age_max.setValue(120)
+
+        grid.addWidget(self.lbl_pat_status, 2, 0)
+        grid.addWidget(self.cb_pat_status, 2, 1)
+        grid.addWidget(self.lbl_age_min, 2, 2)
+        grid.addWidget(self.spin_age_min, 2, 3)
+        grid.addWidget(self.lbl_age_max, 2, 4)
+        grid.addWidget(self.spin_age_max, 2, 5)
+
+        # Staff filters
+        self.lbl_staff_status = QLabel("")
+        self.cb_staff_status = QComboBox()
+        self.cb_staff_status.addItem(I18N.t("filter.all"), "__ALL__")
+        self.cb_staff_status.addItem(I18N.t("staff.active"), "active")
+        self.cb_staff_status.addItem(I18N.t("staff.inactive"), "inactive")
+        self.lbl_staff_pos = QLabel(I18N.t("field.position"))
+        self.in_staff_pos = QLineEdit(); self.in_staff_pos.setPlaceholderText(I18N.t("ph.position_hint"))
+
+        grid.addWidget(self.lbl_staff_status, 3, 0)
+        grid.addWidget(self.cb_staff_status, 3, 1)
+        grid.addWidget(self.lbl_staff_pos, 3, 2)
+        grid.addWidget(self.in_staff_pos, 3, 3, 1, 3)
+
+        # Results list
         self.search_results = QListWidget()
         self.search_results.setAlternatingRowColors(True)
         self.search_results.itemDoubleClicked.connect(self.handle_search_navigate)
+        self.lbl_results_count = QLabel(I18N.t("label.results_count", n=0))
 
         layout.addWidget(self.search_group)
+        layout.addWidget(self.lbl_results_count)
         layout.addWidget(self.search_results, 1)
+
+        # Reactions
+        self.search_all_in.textChanged.connect(lambda _: self.handle_search_all())
+        self.cb_pat_status.currentIndexChanged.connect(lambda _: self.handle_search_all())
+        self.spin_age_min.valueChanged.connect(lambda _: self.handle_search_all())
+        self.spin_age_max.valueChanged.connect(lambda _: self.handle_search_all())
+        self.cb_staff_status.currentIndexChanged.connect(lambda _: self.handle_search_all())
+        self.in_staff_pos.textChanged.connect(lambda _: self.handle_search_all())
+        self.search_mode_pat.toggled.connect(lambda _: self.handle_search_all())
 
         self.tab_idx_search = self.tabs.addTab(tab, "")
 
@@ -1495,6 +1875,7 @@ class MainPage(QWidget):
         self.ap_start_dt = QDateTimeEdit(QDateTime.currentDateTime()); self.ap_start_dt.setCalendarPopup(True)
         self.ap_end_dt = QDateTimeEdit(QDateTime.currentDateTime().addSecs(1800)); self.ap_end_dt.setCalendarPopup(True)
         self.ap_notes_in = QLineEdit()
+        self.ap_notes_in.setPlaceholderText(I18N.t("ph.appt_notes"))
         self.btn_add_appt = QPushButton("")
         self.btn_add_appt.clicked.connect(self.handle_add_appointment)
         self.ap_label_dept = QLabel("")
@@ -1503,6 +1884,13 @@ class MainPage(QWidget):
         self.ap_label_start = QLabel("")
         self.ap_label_end = QLabel("")
         self.ap_label_notes = QLabel("")
+        self.ap_label_dept.setBuddy(self.ap_dept_combo)
+        self.ap_label_patient.setBuddy(self.ap_patient_combo)
+        self.ap_label_staff.setBuddy(self.ap_staff_combo)
+        self.ap_label_start.setBuddy(self.ap_start_dt)
+        self.ap_label_end.setBuddy(self.ap_end_dt)
+        self.ap_label_notes.setBuddy(self.ap_notes_in)
+
         form.addRow(self.ap_label_dept, self.ap_dept_combo)
         form.addRow(self.ap_label_patient, self.ap_patient_combo)
         form.addRow(self.ap_label_staff, self.ap_staff_combo)
@@ -1539,6 +1927,8 @@ class MainPage(QWidget):
         self.ap_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.ap_table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.ap_table.customContextMenuRequested.connect(self.on_appt_context)
+        self.ap_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.ap_table.setSortingEnabled(True)
         self.restore_header_state(self.ap_table, "appts_header_state")
 
         buttons_row = QHBoxLayout()
@@ -1556,6 +1946,12 @@ class MainPage(QWidget):
 
         layout.addWidget(self.create_appt_group)
         layout.addWidget(self.appt_list_group, 1)
+
+        # Empty overlay for appointments table
+        self.ap_empty = QLabel(self.ap_table.viewport())
+        self.ap_empty.setAlignment(Qt.AlignCenter)
+        self.ap_empty.setStyleSheet("color: #888;")
+        self.ap_empty.hide()
 
         self.tab_idx_appts = self.tabs.addTab(tab, "")
 
@@ -1579,13 +1975,12 @@ class MainPage(QWidget):
         if act == a_status and len(appts)==1:
             self.handle_change_appt_status()
         elif act == a_delete:
-            for a in appts: self.appts.remove(a.id)
-            self.refresh_appt_table()
+            self.handle_delete_appt()
         elif act == a_copy_id and len(appts)==1:
             QApplication.clipboard().setText(appts[0].id)
         elif act == a_copy_time and len(appts)==1:
             a = appts[0]
-            QApplication.clipboard().setText(f"{a.start} -> {a.end}")
+            QApplication.clipboard().setText(f"{fmt_dt(a.start)} -> {fmt_dt(a.end)}")
 
     # ---------- General helpers ----------
     def retranslate_ui(self):
@@ -1626,6 +2021,14 @@ class MainPage(QWidget):
         self.search_group.setTitle(I18N.t("group.search"))
         self.search_label_term.setText(I18N.t("search.field.label"))
         self.search_all_in.setPlaceholderText(I18N.t("ph.search_all"))
+        self.search_mode_pat.setText(I18N.t("search.mode.patients"))
+        self.search_mode_stf.setText(I18N.t("search.mode.staff"))
+        self.lbl_pat_status.setText(I18N.t("filter.pat_status"))
+        self.lbl_age_min.setText(I18N.t("filter.age_min"))
+        self.lbl_age_max.setText(I18N.t("filter.age_max"))
+        self.lbl_staff_status.setText(I18N.t("filter.staff_status"))
+        self.lbl_staff_pos.setText(I18N.t("field.position"))
+        self.lbl_results_count.setText(I18N.t("label.results_count", n=self.search_results.count()))
         # Appointments tab
         self.create_appt_group.setTitle(I18N.t("group.create_appt"))
         self.ap_label_dept.setText(I18N.t("field.dept"))
@@ -1640,6 +2043,9 @@ class MainPage(QWidget):
         self.ap_filter_label_date.setText(I18N.t("filter.date"))
         self.ap_filter_label_dept.setText(I18N.t("filter.dept"))
         self.ap_filter_label_status.setText(I18N.t("filter.status"))
+        self.btn_appt_status.setText(I18N.t("btn.change_status"))
+        self.btn_appt_delete.setText(I18N.t("btn.delete_appt"))
+        self.btn_a_refresh.setText(I18N.t("btn.refresh"))
 
         # Dashboard
         self.dash_group_stats.setTitle(I18N.t("dash.stats"))
@@ -1667,6 +2073,7 @@ class MainPage(QWidget):
         self._fill_appt_filter_combos()
         self.refresh_appt_table()
         self.refresh_dashboard()
+        self.update_empty_overlays()
 
     def _on_lang(self, lang: str):
         self.setLayoutDirection(Qt.RightToLeft if lang == "ar" else Qt.LeftToRight)
@@ -1693,6 +2100,7 @@ class MainPage(QWidget):
         self.update_dept_info()
         self._ap_on_dept_changed()
         self.refresh_appt_table()
+        self.update_empty_overlays()
 
     def update_dept_info(self):
         dept = self.current_department()
@@ -1732,13 +2140,116 @@ class MainPage(QWidget):
         self.refresh_appt_table()
         self.p_model.layoutChanged.emit()
         self.s_model.layoutChanged.emit()
+        self.update_empty_overlays()
+
+    # ---------- Validation helpers ----------
+    def set_invalid(self, widget: QWidget, msg: str):
+        widget.setStyleSheet("border: 1px solid #d9534f;")
+        widget.setToolTip(msg)
+
+    def clear_invalid(self, widget: QWidget):
+        widget.setStyleSheet("")
+        widget.setToolTip("")
+
+    # ---------- Export helpers ----------
+    def export_patients_csv(self, all_depts: bool):
+        path, _ = QFileDialog.getSaveFileName(self, I18N.t("dialog.export.csv.title"),
+                                              "patients.csv", I18N.t("dialog.csv.filter"))
+        if not path:
+            return
+        if not path.lower().endswith(".csv"):
+            path += ".csv"
+        try:
+            rows = []
+            if all_depts:
+                for d in self.hospital.departments.values():
+                    for p in d.patients:
+                        rows.append([d.name, p.patient_id, p.name, p.age,
+                                     I18N.t("status.discharged") if p.is_discharged else I18N.t("status.admitted"),
+                                     fmt_dt(getattr(p, "admission_date", None))])
+            else:
+                d = self.current_department()
+                if not d:
+                    QMessageBox.warning(self, I18N.t("msg.warning.title"), I18N.t("msg.select_department_first"))
+                    return
+                for p in d.patients:
+                    rows.append([d.name, p.patient_id, p.name, p.age,
+                                 I18N.t("status.discharged") if p.is_discharged else I18N.t("status.admitted"),
+                                 fmt_dt(getattr(p, "admission_date", None))])
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                w.writerow(["Department", "Patient ID", "Name", "Age", "Status", "Admission"])
+                w.writerows(rows)
+            self.win.statusBar().showMessage(I18N.t("msg.export.ok"), 3000)
+        except Exception as e:
+            QMessageBox.critical(self, I18N.t("msg.error.title"), I18N.t("msg.export.fail", err=e))
+
+    def export_staff_csv(self, all_depts: bool):
+        path, _ = QFileDialog.getSaveFileName(self, I18N.t("dialog.export.csv.title"),
+                                              "staff.csv", I18N.t("dialog.csv.filter"))
+        if not path:
+            return
+        if not path.lower().endswith(".csv"):
+            path += ".csv"
+        try:
+            rows = []
+            if all_depts:
+                for d in self.hospital.departments.values():
+                    for s in d.staff:
+                        rows.append([d.name, s.staff_id, s.name, s.age, s.position,
+                                     I18N.t("staff.active") if s.is_active else I18N.t("staff.inactive")])
+            else:
+                d = self.current_department()
+                if not d:
+                    QMessageBox.warning(self, I18N.t("msg.warning.title"), I18N.t("msg.select_department_first"))
+                    return
+                for s in d.staff:
+                    rows.append([d.name, s.staff_id, s.name, s.age, s.position,
+                                 I18N.t("staff.active") if s.is_active else I18N.t("staff.inactive")])
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                w.writerow(["Department", "Staff ID", "Name", "Age", "Position", "Status"])
+                w.writerows(rows)
+            self.win.statusBar().showMessage(I18N.t("msg.export.ok"), 3000)
+        except Exception as e:
+            QMessageBox.critical(self, I18N.t("msg.error.title"), I18N.t("msg.export.fail", err=e))
+
+    def export_appts_csv_filtered(self):
+        path, _ = QFileDialog.getSaveFileName(self, I18N.t("dialog.export.csv.title"),
+                                              "appointments.csv", I18N.t("dialog.csv.filter"))
+        if not path:
+            return
+        if not path.lower().endswith(".csv"):
+            path += ".csv"
+        try:
+            rows = []
+            for r in range(self.ap_proxy.rowCount()):
+                a: Appointment = self.ap_proxy.index(r, 0).data(Qt.UserRole)
+                p = self.appts.patient_of(a)
+                s = self.appts.staff_of(a)
+                rows.append([
+                    a.id, a.dept_name,
+                    (p.patient_id if p else ""), (p.name if p else ""),
+                    (s.staff_id if s else ""), (s.name if s else ""),
+                    fmt_dt(a.start), fmt_dt(a.end),
+                    AppointmentStatus.label(a.status), a.notes
+                ])
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                w.writerow(["#", "Department", "Patient ID", "Patient Name", "Staff ID", "Staff Name",
+                            "Start", "End", "Status", "Notes"])
+                w.writerows(rows)
+            self.win.statusBar().showMessage(I18N.t("msg.export.ok"), 3000)
+        except Exception as e:
+            QMessageBox.critical(self, I18N.t("msg.error.title"), I18N.t("msg.export.fail", err=e))
 
     # ---------- Departments ops ----------
     def handle_add_department(self):
         name = self.dept_name_in.text().strip()
         cap = int(self.dept_cap_in.value())
         if not name:
-            QMessageBox.warning(self, I18N.t("msg.warning.title"), I18N.t("field.name") + " ?")
+            self.set_invalid(self.dept_name_in, I18N.t("msg.dept.name_required"))
+            self.win.statusBar().showMessage(I18N.t("msg.validation.fix_fields"), 3000)
             return
         try:
             if name in self.hospital.departments:
@@ -1760,7 +2271,9 @@ class MainPage(QWidget):
         age = int(self.p_age_in.value())
         med = self.p_med_rec_in.toPlainText().strip()
         if not name:
-            QMessageBox.warning(self, I18N.t("msg.warning.title"), I18N.t("msg.patient.name_required")); return
+            self.set_invalid(self.p_name_in, I18N.t("msg.patient.name_required"))
+            self.win.statusBar().showMessage(I18N.t("msg.validation.fix_fields"), 3000)
+            return
         try:
             patient = Patient(name, age, med)
             if len(dept.patients) >= dept.capacity:
@@ -1780,50 +2293,99 @@ class MainPage(QWidget):
         name = self.s_name_in.text().strip()
         age = int(self.s_age_in.value())
         position = self.s_position_in.text().strip()
-        if not name or not position:
-            QMessageBox.warning(self, I18N.t("msg.warning.title"), I18N.t("msg.staff.name_position_required")); return
+        bad = False
+        if not name:
+            self.set_invalid(self.s_name_in, I18N.t("msg.staff.name_position_required"))
+            bad = True
+        if not position:
+            self.set_invalid(self.s_position_in, I18N.t("msg.staff.name_position_required"))
+            bad = True
+        if bad:
+            self.win.statusBar().showMessage(I18N.t("msg.validation.fix_fields"), 3000)
+            return
         try:
             staff = Staff(name, age, position, dept.name)
             dept.staff.append(staff)
             self.s_name_in.clear(); self.s_age_in.setValue(18); self.s_position_in.clear()
             self.s_model.layoutChanged.emit()
             self.refresh_dashboard()
+            self.update_empty_overlays()
             QMessageBox.information(self, I18N.t("msg.info.title"), I18N.t("msg.staff.added", sid=staff.staff_id))
         except Exception as e:
             QMessageBox.critical(self, I18N.t("msg.error.title"), str(e))
 
     # ---------- Search ----------
-    def handle_search_all(self, text: str):
-        text = text.strip().lower(); self.search_results.clear()
-        if not text: return
-        for dept in self.hospital.departments.values():
-            for p in dept.patients:
-                hay = f"{p.name} {p.patient_id}".lower()
-                if text in hay:
+    def handle_search_all(self):
+        term = self.search_all_in.text().strip().lower()
+        self.search_results.clear()
+        mode_patients = self.search_mode_pat.isChecked()
+        if mode_patients:
+            status_filter = self.cb_pat_status.currentData()
+            age_min = self.spin_age_min.value()
+            age_max = self.spin_age_max.value()
+            for dept in self.hospital.departments.values():
+                for p in dept.patients:
+                    if term and (term not in f"{p.name} {p.patient_id}".lower()):
+                        continue
+                    if status_filter == "admitted" and p.is_discharged:
+                        continue
+                    if status_filter == "discharged" and not p.is_discharged:
+                        continue
+                    if not (age_min <= p.age <= age_max):
+                        continue
                     status = I18N.t("status.admitted") if not p.is_discharged else I18N.t("status.discharged")
                     it = QListWidgetItem(f"[{dept.name}] {p.patient_id} | {p.name} | {status}")
                     it.setData(Qt.UserRole, (dept, p))
                     self.search_results.addItem(it)
+        else:
+            st_filter = self.cb_staff_status.currentData()
+            pos_term = self.in_staff_pos.text().strip().lower()
+            for dept in self.hospital.departments.values():
+                for s in dept.staff:
+                    if term and (term not in f"{s.name} {s.staff_id}".lower()):
+                        continue
+                    if st_filter == "active" and not s.is_active:
+                        continue
+                    if st_filter == "inactive" and s.is_active:
+                        continue
+                    if pos_term and (pos_term not in s.position.lower()):
+                        continue
+                    it = QListWidgetItem(f"[{dept.name}] {s.staff_id} | {s.name} | {s.position} | " +
+                                         (I18N.t("staff.active") if s.is_active else I18N.t("staff.inactive")))
+                    it.setData(Qt.UserRole, (dept, s))
+                    self.search_results.addItem(it)
+        self.lbl_results_count.setText(I18N.t("label.results_count", n=self.search_results.count()))
 
     def handle_search_navigate(self, item: QListWidgetItem):
         data = item.data(Qt.UserRole)
         if not data: return
-        dept, patient = data
+        dept, obj = data
         for i in range(self.dept_list.count()):
             if self.dept_list.item(i).data(Qt.UserRole) is dept:
                 self.dept_list.setCurrentRow(i)
                 break
-        self.tabs.setCurrentIndex(self.tab_idx_patients)
-        # select in table correctly via mapping source->proxy
-        model = self.p_model
-        if model.dept is dept:
-            for r, p in enumerate(dept.patients):
-                if p is patient:
-                    src_idx = self.p_model.index(r, 0)
-                    proxy_idx = self.p_proxy.mapFromSource(src_idx)
-                    if proxy_idx.isValid():
-                        self.p_table.selectRow(proxy_idx.row())
-                    break
+        if isinstance(obj, Patient):
+            self.tabs.setCurrentIndex(self.tab_idx_patients)
+            model = self.p_model
+            if model.dept is dept:
+                for r, p in enumerate(dept.patients):
+                    if p is obj:
+                        src_idx = self.p_model.index(r, 0)
+                        proxy_idx = self.p_proxy.mapFromSource(src_idx)
+                        if proxy_idx.isValid():
+                            self.p_table.selectRow(proxy_idx.row())
+                        break
+        else:
+            self.tabs.setCurrentIndex(self.tab_idx_staff)
+            model = self.s_model
+            if model.dept is dept:
+                for r, s in enumerate(dept.staff):
+                    if s is obj:
+                        src_idx = self.s_model.index(r, 0)
+                        proxy_idx = self.s_proxy.mapFromSource(src_idx)
+                        if proxy_idx.isValid():
+                            self.s_table.selectRow(proxy_idx.row())
+                        break
 
     # ---------- Appointments helpers ----------
     def _fill_dept_combos(self):
@@ -1886,7 +2448,7 @@ class MainPage(QWidget):
                 joiner = " & " if I18N.lang=="en" else " و "
                 who_s = joiner.join(who)
                 details.append(I18N.t("msg.appt.conflict.row", id=a.id, dept=a.dept_name,
-                                       start=a.start.strftime("%H:%M"), end=a.end.strftime("%H:%M"), who=who_s))
+                                       start=fmt_dt(a.start, time_only=True), end=fmt_dt(a.end, time_only=True), who=who_s))
             QMessageBox.critical(self, I18N.t("msg.appt.conflict.title"),
                                  I18N.t("msg.appt.conflict.body", details="\n".join(details)))
             return
@@ -1907,11 +2469,30 @@ class MainPage(QWidget):
         status = self.ap_filter_status.currentData() if self.ap_filter_status.count() else "__ALL__"
         items = self.appts.list_filtered(day=day, dept_name=dept_name, status=status)
         self.ap_model.set_items(items)
+        self.update_empty_overlays()
 
     def _current_selected_appt(self) -> Optional[Appointment]:
         idx = self.ap_table.selectionModel().currentIndex()
         if not idx.isValid(): return None
         return self.ap_proxy.index(idx.row(), 0).data(Qt.UserRole)
+
+    def _confirm_delete_appts_if_needed(self, count: int) -> bool:
+        s = QSettings("HospitalApp", "UI")
+        ask = s.value("confirm_delete_appt", "yes")
+        if str(ask) != "no":
+            box = QMessageBox(self)
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle(I18N.t("confirm.delete_appt.title"))
+            box.setText(I18N.t("confirm.delete_appt.body", n=count))
+            cb = QCheckBox(I18N.t("chk.dont_ask_again"), box)
+            box.setCheckBox(cb)
+            box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            res = box.exec()
+            if res != QMessageBox.Yes:
+                return False
+            if cb.isChecked():
+                s.setValue("confirm_delete_appt", "no")
+        return True
 
     def handle_change_appt_status(self):
         a = self._current_selected_appt()
@@ -1932,17 +2513,56 @@ class MainPage(QWidget):
         idxs = self.ap_table.selectionModel().selectedRows()
         if not idxs:
             QMessageBox.warning(self, I18N.t("msg.warning.title"), I18N.t("msg.select_appt")); return
+        if not self._confirm_delete_appts_if_needed(len(idxs)):
+            return
         for i in idxs:
             a = self.ap_proxy.index(i.row(), 0).data(Qt.UserRole)
             self.appts.remove(a.id)
         self.refresh_appt_table()
         self.refresh_dashboard()
 
+    # ---------- Empty states ----------
+    def update_empty_overlays(self):
+        # Patients table
+        rect = self.p_table.viewport().rect()
+        self.p_empty.setGeometry(rect)
+        dept = self.current_department()
+        if not dept:
+            self.p_empty.setText(I18N.t("empty.no_dept"))
+            self.p_empty.show()
+        elif self.p_model.rowCount() == 0:
+            self.p_empty.setText(I18N.t("empty.patients"))
+            self.p_empty.show()
+        else:
+            self.p_empty.hide()
+
+        # Staff table
+        rects = self.s_table.viewport().rect()
+        self.s_empty.setGeometry(rects)
+        if not dept:
+            self.s_empty.setText(I18N.t("empty.no_dept"))
+            self.s_empty.show()
+        elif self.s_model.rowCount() == 0:
+            self.s_empty.setText(I18N.t("empty.staff"))
+            self.s_empty.show()
+        else:
+            self.s_empty.hide()
+
+        # Appointments table
+        recta = self.ap_table.viewport().rect()
+        self.ap_empty.setGeometry(recta)
+        if self.ap_model.rowCount() == 0:
+            self.ap_empty.setText(I18N.t("empty.appts"))
+            self.ap_empty.show()
+        else:
+            self.ap_empty.hide()
+
     # ---------- Layout persistence ----------
     def save_layouts(self):
         self.save_header_state(self.p_table, "patients_header_state")
         self.save_header_state(self.s_table, "staff_header_state")
         self.save_header_state(self.ap_table, "appts_header_state")
+        self.save_splitter_state(self.splitter, "main_splitter_state")
 
     def save_header_state(self, table: QTableView, key: str):
         s = QSettings("HospitalApp", "UI")
@@ -1955,10 +2575,27 @@ class MainPage(QWidget):
         if isinstance(state, QByteArray):
             table.horizontalHeader().restoreState(state)
 
+    def save_splitter_state(self, splitter: QSplitter, key: str):
+        s = QSettings("HospitalApp", "UI")
+        s.setValue(key, splitter.saveState())
+
+    def restore_splitter_state(self, splitter: QSplitter, key: str):
+        s = QSettings("HospitalApp", "UI")
+        state = s.value(key)
+        if isinstance(state, QByteArray):
+            splitter.restoreState(state)
+
+
 # ================= main =================
 def main():
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
+
+    # Set initial locale based on stored language
+    if I18N.lang == "ar":
+        QLocale.setDefault(QLocale(QLocale.Arabic))
+    else:
+        QLocale.setDefault(QLocale(QLocale.English))
 
     I18N.set_language(I18N.lang)
     THEME.apply(app)
