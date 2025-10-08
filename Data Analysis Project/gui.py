@@ -10,6 +10,8 @@ import warnings
 from scipy import stats
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
 import seaborn as sns
 import matplotlib.pyplot as plt
 warnings.filterwarnings('ignore')
@@ -74,8 +76,13 @@ class DataEngine:
     @staticmethod
     def _clean_enterprise_data(data):
         """Enterprise-grade data cleaning pipeline"""
-        # Column standardization
+        # Column standardization - preserve original names but create clean versions
+        original_columns = data.columns.tolist()
         data.columns = data.columns.str.replace(' ', '_').str.lower().str.strip()
+        
+        # Store original column mapping
+        data.attrs['original_columns'] = original_columns
+        data.attrs['clean_columns'] = data.columns.tolist()
         
         # Data quality pipeline
         data = DataEngine._clean_demographics(data)
@@ -90,8 +97,8 @@ class DataEngine:
     @staticmethod
     def _clean_demographics(data):
         """Clean demographic data with advanced validation"""
-        # Age processing
-        if 'athlete_year_of_birth' in data.columns:
+        # Age processing - using athlete_year_of_birth
+        if 'athlete_year_of_birth' in data.columns and 'year_of_event' in data.columns:
             data = data.dropna(subset=['athlete_year_of_birth'])
             data['age'] = data['year_of_event'] - data['athlete_year_of_birth']
             
@@ -107,6 +114,13 @@ class DataEngine:
         if 'athlete_gender' in data.columns:
             data = data[data['athlete_gender'].isin(['M', 'F'])]
             data['athlete_gender'] = data['athlete_gender'].map({'F': 0, 'M': 1})
+        
+        # Athlete country processing
+        if 'athlete_country' in data.columns:
+            # Remove missing country data
+            data = data.dropna(subset=['athlete_country'])
+            # Standardize country names
+            data['athlete_country'] = data['athlete_country'].str.title().str.strip()
         
         return data
     
@@ -139,6 +153,10 @@ class DataEngine:
                 early_mask = data['year_of_event'] <= 1995
                 data.loc[early_mask, 'athlete_average_speed'] *= 3.6
         
+        # Event number of finishers
+        if 'event_number_of_finishers' in data.columns:
+            data['event_number_of_finishers'] = pd.to_numeric(data['event_number_of_finishers'], errors='coerce')
+        
         return data
     
     @staticmethod
@@ -148,6 +166,10 @@ class DataEngine:
         if 'event_distance/length' in data.columns:
             time_mask = data['event_distance/length'].astype(str).str.contains('h', na=False)
             data = data[~time_mask]
+        
+        # Event name cleaning
+        if 'event_name' in data.columns:
+            data['event_name'] = data['event_name'].str.title().str.strip()
         
         return data
     
@@ -187,11 +209,23 @@ class DataEngine:
                 labels=['80s', '90s', '2000s', '2010s', '2020s']
             )
         
+        # Athlete experience (number of participations)
+        if 'athlete_id' in data.columns:
+            athlete_experience = data.groupby('athlete_id').size().reset_index(name='participation_count')
+            data = data.merge(athlete_experience, on='athlete_id', how='left')
+        
+        # Event popularity
+        if 'event_name' in data.columns and 'event_number_of_finishers' in data.columns:
+            event_popularity = data.groupby('event_name')['event_number_of_finishers'].max().reset_index()
+            event_popularity.columns = ['event_name', 'max_finishers']
+            data = data.merge(event_popularity, on='event_name', how='left')
+        
         return data
     
     @staticmethod
+    @st.cache_data(ttl=3600)
     def get_ml_insights(data):
-        """Generate machine learning insights"""
+        """Generate machine learning insights - CACHED for performance"""
         insights = {}
         
         # Performance predictions
@@ -201,6 +235,7 @@ class DataEngine:
             insights['demographic_shifts'] = DataEngine._analyze_demographic_shifts(data)
             insights['clustering_analysis'] = DataEngine._perform_clustering(data)
             insights['correlation_analysis'] = DataEngine._analyze_correlations(data)
+            insights['performance_prediction'] = DataEngine._predict_performance(data)
         
         return insights
     
@@ -320,6 +355,42 @@ class DataEngine:
             insights.append(f"Correlation analysis incomplete")
         
         return insights if insights else ["No strong correlations detected"]
+    
+    @staticmethod
+    def _predict_performance(data):
+        """Performance prediction using ML"""
+        insights = []
+        try:
+            features = ['age', 'event_distance/length', 'athlete_gender']
+            target = 'athlete_average_speed'
+            
+            model_data = data[features + [target]].dropna()
+            
+            if len(model_data) > 100:
+                X = model_data[features]
+                y = model_data[target]
+                
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                
+                model = RandomForestRegressor(n_estimators=100, random_state=42)
+                model.fit(X_train, y_train)
+                
+                score = model.score(X_test, y_test)
+                insights.append(f"Performance prediction accuracy: {score:.2f} (R² score)")
+                
+                # Feature importance
+                feature_importance = pd.DataFrame({
+                    'feature': features,
+                    'importance': model.feature_importances_
+                }).sort_values('importance', ascending=False)
+                
+                top_feature = feature_importance.iloc[0]
+                insights.append(f"Most important performance factor: {top_feature['feature']} ({top_feature['importance']:.2f} importance)")
+                
+        except Exception as e:
+            insights.append("Performance prediction model not available")
+        
+        return insights
 
 # ================================
 # ENTERPRISE VISUALIZATION ENGINE
@@ -335,6 +406,11 @@ class VisualizationEngine:
     
     def create_executive_summary(self, data, kpis):
         """Create executive summary dashboard"""
+        return self._cached_create_executive_summary(data, kpis)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_executive_summary(_self, data, kpis):
+        """Cached implementation of executive summary"""
         fig = make_subplots(
             rows=2, cols=2,
             subplot_titles=('Participation Growth', 'Performance Trends', 
@@ -350,7 +426,7 @@ class VisualizationEngine:
             participation = data['year_of_event'].value_counts().sort_index()
             fig.add_trace(
                 go.Bar(x=participation.index, y=participation.values, 
-                       name="Participants", marker_color=self.theme['primary'],
+                       name="Participants", marker_color=_self.theme['primary'],
                        marker_line_width=0),
                 row=1, col=1
             )
@@ -362,7 +438,7 @@ class VisualizationEngine:
                 performance = performance_data.groupby('year_of_event')['athlete_average_speed'].mean()
                 fig.add_trace(
                     go.Scatter(x=performance.index, y=performance.values, 
-                              name="Avg Speed", line=dict(color=self.theme['secondary'], width=3),
+                              name="Avg Speed", line=dict(color=_self.theme['secondary'], width=3),
                               mode='lines+markers', marker=dict(size=8)),
                     row=1, col=2
                 )
@@ -372,7 +448,7 @@ class VisualizationEngine:
             gender_data = data.dropna(subset=['athlete_gender'])
             if not gender_data.empty:
                 gender_counts = gender_data['athlete_gender'].value_counts()
-                colors = [self.theme['secondary'], self.theme['primary']]
+                colors = [_self.theme['secondary'], _self.theme['primary']]
                 fig.add_trace(
                     go.Pie(labels=['Female', 'Male'], values=gender_counts.values,
                           name="Gender", marker_colors=colors,
@@ -386,7 +462,7 @@ class VisualizationEngine:
             if not age_data.empty:
                 fig.add_trace(
                     go.Histogram(x=age_data['age'], nbinsx=20, name="Age Distribution",
-                                marker_color=self.theme['primary'],
+                                marker_color=_self.theme['primary'],
                                 marker_line_width=0,
                                 opacity=0.8),
                     row=2, col=2
@@ -397,37 +473,43 @@ class VisualizationEngine:
             showlegend=False,
             title_text="<b>Executive Summary Dashboard</b>",
             title_x=0.5,
-            font=dict(size=12, color=self.theme['text_light']),
-            plot_bgcolor=self.theme['card_bg'],
-            paper_bgcolor=self.theme['background'],
-            template=self.dark_template
+            font=dict(size=12, color=_self.theme['text_light']),
+            plot_bgcolor=_self.theme['card_bg'],
+            paper_bgcolor=_self.theme['background'],
+            template=_self.dark_template
         )
         
         # Update axes
-        fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor=self.theme['grid_color'],
-                        zerolinecolor=self.theme['grid_color'])
-        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor=self.theme['grid_color'],
-                        zerolinecolor=self.theme['grid_color'])
+        fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor=_self.theme['grid_color'],
+                        zerolinecolor=_self.theme['grid_color'])
+        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor=_self.theme['grid_color'],
+                        zerolinecolor=_self.theme['grid_color'])
         
         return fig
     
     def create_performance_metrics(self, data):
         """Create comprehensive performance metrics dashboard"""
+        return self._cached_create_performance_metrics(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_performance_metrics(_self, data):
+        """Cached implementation of performance metrics"""
         # Performance by decade with trend line
         if 'year_of_event' in data.columns and 'athlete_average_speed' in data.columns:
-            data['decade'] = (data['year_of_event'] // 10) * 10
-            decade_performance = data.groupby('decade')['athlete_average_speed'].agg(['mean', 'std', 'count']).reset_index()
+            data_copy = data.copy()
+            data_copy['decade'] = (data_copy['year_of_event'] // 10) * 10
+            decade_performance = data_copy.groupby('decade')['athlete_average_speed'].agg(['mean', 'std', 'count']).reset_index()
             
             fig1 = go.Figure()
             fig1.add_trace(go.Bar(
                 x=decade_performance['decade'],
                 y=decade_performance['mean'],
                 name='Average Speed',
-                marker_color=self.theme['primary'],
+                marker_color=_self.theme['primary'],
                 marker_line_width=0,
                 opacity=0.8,
                 error_y=dict(type='data', array=decade_performance['std'], visible=True,
-                           color=self.theme['text_light'], thickness=1.5)
+                           color=_self.theme['text_light'], thickness=1.5)
             ))
             
             # Add trend line
@@ -438,7 +520,7 @@ class VisualizationEngine:
                     x=decade_performance['decade'],
                     y=p(decade_performance['decade']),
                     name='Trend',
-                    line=dict(color=self.theme['danger'], dash='dash', width=3)
+                    line=dict(color=_self.theme['danger'], dash='dash', width=3)
                 ))
             
             fig1.update_layout(
@@ -446,37 +528,41 @@ class VisualizationEngine:
                 xaxis_title='Decade',
                 yaxis_title='Average Speed (km/h)',
                 height=400,
-                plot_bgcolor=self.theme['card_bg'],
-                paper_bgcolor=self.theme['background'],
-                font=dict(color=self.theme['text_light']),
-                template=self.dark_template
+                plot_bgcolor=_self.theme['card_bg'],
+                paper_bgcolor=_self.theme['background'],
+                font=dict(color=_self.theme['text_light']),
+                template=_self.dark_template
             )
         else:
-            fig1 = self._create_empty_chart("Performance data unavailable")
+            fig1 = _self._create_empty_chart("Performance data unavailable")
         
         # Speed distribution by performance tier
         if 'performance_tier' in data.columns and 'athlete_average_speed' in data.columns:
             performance_data = data.dropna(subset=['performance_tier', 'athlete_average_speed'])
             if not performance_data.empty:
+                # Sample data for better performance if dataset is large
+                if len(performance_data) > 5000:
+                    performance_data = performance_data.sample(5000, random_state=42)
+                
                 fig2 = px.box(
                     performance_data, 
                     x='performance_tier', 
                     y='athlete_average_speed',
                     title='<b>Speed Distribution by Performance Tier</b>',
                     color='performance_tier',
-                    color_discrete_sequence=[self.theme['primary'], self.theme['secondary'], 
-                                           self.theme['success'], self.theme['warning']]
+                    color_discrete_sequence=[_self.theme['primary'], _self.theme['secondary'], 
+                                           _self.theme['success'], _self.theme['warning']]
                 )
                 fig2.update_layout(
-                    plot_bgcolor=self.theme['card_bg'],
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light']),
-                    template=self.dark_template
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template
                 )
             else:
-                fig2 = self._create_empty_chart("Performance tier data unavailable")
+                fig2 = _self._create_empty_chart("Performance tier data unavailable")
         else:
-            fig2 = self._create_empty_chart("Performance tier data unavailable")
+            fig2 = _self._create_empty_chart("Performance tier data unavailable")
         
         # Finish rate analysis
         if 'event_number_of_finishers' in data.columns and 'event_name' in data.columns:
@@ -497,23 +583,28 @@ class VisualizationEngine:
                 color_continuous_scale='Viridis'
             )
             fig3.update_layout(
-                plot_bgcolor=self.theme['card_bg'],
-                paper_bgcolor=self.theme['background'],
-                font=dict(color=self.theme['text_light']),
-                template=self.dark_template
+                plot_bgcolor=_self.theme['card_bg'],
+                paper_bgcolor=_self.theme['background'],
+                font=dict(color=_self.theme['text_light']),
+                template=_self.dark_template
             )
         else:
-            fig3 = self._create_empty_chart("Finish rate data unavailable")
+            fig3 = _self._create_empty_chart("Finish rate data unavailable")
         
         return fig1, fig2, fig3
     
     def create_geographic_intelligence(self, data):
         """Create comprehensive geographic analysis"""
-        # Country participation heatmap
-        if 'event_country' in data.columns:
-            country_data = data.dropna(subset=['event_country'])
+        return self._cached_create_geographic_intelligence(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_geographic_intelligence(_self, data):
+        """Cached implementation of geographic intelligence"""
+        # Country participation heatmap - using athlete_country
+        if 'athlete_country' in data.columns:
+            country_data = data.dropna(subset=['athlete_country'])
             if not country_data.empty:
-                country_participation = country_data['event_country'].value_counts().reset_index()
+                country_participation = country_data['athlete_country'].value_counts().reset_index()
                 country_participation.columns = ['Country', 'Participants']
                 
                 fig1 = px.choropleth(
@@ -523,23 +614,30 @@ class VisualizationEngine:
                     color='Participants',
                     title='<b>Global Participation Heatmap</b>',
                     color_continuous_scale='Plasma',
-                    height=500
+                    height=500,
+                    hover_data={'Country': True, 'Participants': True}
                 )
                 fig1.update_layout(
-                    geo=dict(bgcolor='rgba(0,0,0,0)', lakecolor=self.theme['card_bg']),
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light'])
+                    geo=dict(
+                        bgcolor='rgba(0,0,0,0)', 
+                        lakecolor=_self.theme['card_bg'],
+                        landcolor='lightgray',
+                        oceancolor='darkblue',
+                        showocean=True
+                    ),
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light'])
                 )
             else:
-                fig1 = self._create_empty_chart("Geographic data unavailable")
+                fig1 = _self._create_empty_chart("Geographic data unavailable")
         else:
-            fig1 = self._create_empty_chart("Geographic data unavailable")
+            fig1 = _self._create_empty_chart("Geographic data unavailable")
         
-        # Top countries bar chart
-        if 'event_country' in data.columns:
-            country_data = data.dropna(subset=['event_country'])
+        # Top countries bar chart - using athlete_country
+        if 'athlete_country' in data.columns:
+            country_data = data.dropna(subset=['athlete_country'])
             if not country_data.empty:
-                top_countries = country_data['event_country'].value_counts().head(15).reset_index()
+                top_countries = country_data['athlete_country'].value_counts().head(15).reset_index()
                 top_countries.columns = ['Country', 'Participants']
                 
                 fig2 = px.bar(
@@ -549,24 +647,28 @@ class VisualizationEngine:
                     orientation='h',
                     title='<b>Top 15 Countries by Participation</b>',
                     color='Participants',
-                    color_continuous_scale='Teal'
+                    color_continuous_scale='Teal',
+                    text='Participants'
                 )
+                fig2.update_traces(texttemplate='%{text:,}', textposition='outside')
                 fig2.update_layout(
                     showlegend=False, 
                     height=500, 
-                    plot_bgcolor=self.theme['card_bg'],
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light']),
-                    template=self.dark_template
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
+                    xaxis_title="Number of Participants",
+                    yaxis_title="Country"
                 )
             else:
-                fig2 = self._create_empty_chart("Geographic data unavailable")
+                fig2 = _self._create_empty_chart("Geographic data unavailable")
         else:
-            fig2 = self._create_empty_chart("Geographic data unavailable")
+            fig2 = _self._create_empty_chart("Geographic data unavailable")
         
-        # Geographic performance analysis
-        if 'event_country' in data.columns and 'athlete_average_speed' in data.columns:
-            geo_performance = data.groupby('event_country')['athlete_average_speed'].mean().reset_index()
+        # Geographic performance analysis - using athlete_country
+        if 'athlete_country' in data.columns and 'athlete_average_speed' in data.columns:
+            geo_performance = data.groupby('athlete_country')['athlete_average_speed'].mean().reset_index()
             geo_performance = geo_performance.dropna()
             if not geo_performance.empty:
                 top_performance = geo_performance.nlargest(10, 'athlete_average_speed')
@@ -574,50 +676,114 @@ class VisualizationEngine:
                 fig3 = px.bar(
                     top_performance,
                     x='athlete_average_speed',
-                    y='event_country',
+                    y='athlete_country',
                     orientation='h',
                     title='<b>Top 10 Countries by Average Speed</b>',
                     color='athlete_average_speed',
-                    color_continuous_scale='Greens'
+                    color_continuous_scale='Greens',
+                    text='athlete_average_speed'
                 )
+                fig3.update_traces(texttemplate='%{text:.2f} km/h', textposition='outside')
                 fig3.update_layout(
                     showlegend=False, 
                     height=400, 
-                    plot_bgcolor=self.theme['card_bg'],
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light']),
-                    template=self.dark_template
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
+                    xaxis_title="Average Speed (km/h)",
+                    yaxis_title="Country"
                 )
             else:
-                fig3 = self._create_empty_chart("Performance by country data unavailable")
+                fig3 = _self._create_empty_chart("Performance by country data unavailable")
         else:
-            fig3 = self._create_empty_chart("Performance by country data unavailable")
+            fig3 = _self._create_empty_chart("Performance by country data unavailable")
         
-        return fig1, fig2, fig3
+        # NEW: Regional performance comparison - using athlete_country
+        if 'athlete_country' in data.columns and 'athlete_average_speed' in data.columns:
+            regional_data = data.dropna(subset=['athlete_country', 'athlete_average_speed'])
+            if not regional_data.empty:
+                # Group by continent/region (simplified)
+                def get_region(country):
+                    europe = ['Germany', 'France', 'Italy', 'Spain', 'United Kingdom', 'Switzerland', 'Austria', 'Sweden', 'Norway', 'Finland', 'Denmark']
+                    north_america = ['United States', 'Canada', 'Mexico']
+                    asia = ['Japan', 'China', 'India', 'South Korea', 'Australia', 'New Zealand']
+                    africa = ['South Africa', 'Kenya', 'Ethiopia', 'Morocco']
+                    
+                    if country in europe:
+                        return 'Europe'
+                    elif country in north_america:
+                        return 'North America'
+                    elif country in asia:
+                        return 'Asia'
+                    elif country in africa:
+                        return 'Africa'
+                    else:
+                        return 'Other'
+                
+                regional_data['region'] = regional_data['athlete_country'].apply(get_region)
+                
+                # Create regional comparison chart
+                regional_means = regional_data.groupby('region')['athlete_average_speed'].mean().reset_index()
+                
+                fig4 = px.bar(
+                    regional_means,
+                    x='region',
+                    y='athlete_average_speed',
+                    title='<b>Average Speed by Geographic Region</b>',
+                    color='athlete_average_speed',
+                    color_continuous_scale='Viridis',
+                    text='athlete_average_speed'
+                )
+                fig4.update_traces(texttemplate='%{text:.2f} km/h', textposition='outside')
+                fig4.update_layout(
+                    height=400,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
+                    xaxis_title="Geographic Region",
+                    yaxis_title="Average Speed (km/h)"
+                )
+            else:
+                fig4 = _self._create_empty_chart("Regional data unavailable")
+        else:
+            fig4 = _self._create_empty_chart("Regional data unavailable")
+        
+        return fig1, fig2, fig3, fig4
     
     def create_advanced_analytics(self, data):
         """Create advanced analytics visualizations"""
+        return self._cached_create_advanced_analytics(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_advanced_analytics(_self, data):
+        """Cached implementation of advanced analytics"""
         # Performance by age group with statistical analysis
         if 'age_group' in data.columns and 'athlete_average_speed' in data.columns:
             plot_data = data.dropna(subset=['age_group', 'athlete_average_speed'])
             if not plot_data.empty:
+                # Sample data for better performance
+                if len(plot_data) > 5000:
+                    plot_data = plot_data.sample(5000, random_state=42)
+                
                 fig1 = px.box(plot_data, x='age_group', y='athlete_average_speed',
                              title="<b>Performance Distribution by Age Group</b>",
                              color='age_group',
-                             color_discrete_sequence=[self.theme['primary'], self.theme['secondary'],
-                                                    self.theme['success'], self.theme['warning'],
-                                                    self.theme['accent']])
+                             color_discrete_sequence=[_self.theme['primary'], _self.theme['secondary'],
+                                                    _self.theme['success'], _self.theme['warning'],
+                                                    _self.theme['accent']])
                 fig1.update_layout(
-                    plot_bgcolor=self.theme['card_bg'],
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light']),
-                    template=self.dark_template,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
                     showlegend=False
                 )
             else:
-                fig1 = self._create_empty_chart("Performance data unavailable")
+                fig1 = _self._create_empty_chart("Performance data unavailable")
         else:
-            fig1 = self._create_empty_chart("Performance data unavailable")
+            fig1 = _self._create_empty_chart("Performance data unavailable")
         
         # Event difficulty analysis
         if 'event_difficulty' in data.columns:
@@ -629,23 +795,28 @@ class VisualizationEngine:
                              color=difficulty_stats.values,
                              color_continuous_scale='Viridis')
                 fig2.update_layout(
-                    plot_bgcolor=self.theme['card_bg'],
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light']),
-                    template=self.dark_template,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
                     showlegend=False,
                     xaxis_title="Event Difficulty",
                     yaxis_title="Number of Events"
                 )
             else:
-                fig2 = self._create_empty_chart("Event data unavailable")
+                fig2 = _self._create_empty_chart("Event data unavailable")
         else:
-            fig2 = self._create_empty_chart("Event data unavailable")
+            fig2 = _self._create_empty_chart("Event data unavailable")
         
         return fig1, fig2
     
     def create_temporal_analysis(self, data):
         """Create time-series analysis charts"""
+        return self._cached_create_temporal_analysis(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_temporal_analysis(_self, data):
+        """Cached implementation of temporal analysis"""
         # Monthly/Yearly participation trends
         if 'year_of_event' in data.columns:
             yearly_trend = data['year_of_event'].value_counts().sort_index()
@@ -656,8 +827,8 @@ class VisualizationEngine:
                 y=yearly_trend.values,
                 mode='lines+markers',
                 name='Participants',
-                line=dict(color=self.theme['primary'], width=3),
-                marker=dict(size=6, color=self.theme['secondary'])
+                line=dict(color=_self.theme['primary'], width=3),
+                marker=dict(size=6, color=_self.theme['secondary'])
             ))
             
             # Add moving average
@@ -668,7 +839,7 @@ class VisualizationEngine:
                     y=ma.values,
                     mode='lines',
                     name='3-Year Moving Avg',
-                    line=dict(color=self.theme['warning'], dash='dash', width=2)
+                    line=dict(color=_self.theme['warning'], dash='dash', width=2)
                 ))
             
             fig1.update_layout(
@@ -676,47 +847,60 @@ class VisualizationEngine:
                 xaxis_title='Year',
                 yaxis_title='Number of Participants',
                 height=400,
-                plot_bgcolor=self.theme['card_bg'],
-                paper_bgcolor=self.theme['background'],
-                font=dict(color=self.theme['text_light']),
-                template=self.dark_template
+                plot_bgcolor=_self.theme['card_bg'],
+                paper_bgcolor=_self.theme['background'],
+                font=dict(color=_self.theme['text_light']),
+                template=_self.dark_template
             )
         else:
-            fig1 = self._create_empty_chart("Temporal data unavailable")
+            fig1 = _self._create_empty_chart("Temporal data unavailable")
         
         # Seasonal analysis
-        if 'year_of_event' in data.columns:
-            # Simulate month data for seasonal analysis
-            np.random.seed(42)
-            data['month'] = np.random.randint(1, 13, len(data))
-            monthly_participation = data['month'].value_counts().sort_index()
-            
-            fig2 = px.line(
-                x=monthly_participation.index,
-                y=monthly_participation.values,
-                title='<b>Seasonal Participation Pattern</b>',
-                labels={'x': 'Month', 'y': 'Participants'}
-            )
-            fig2.update_traces(line=dict(color=self.theme['secondary'], width=3),
-                              marker=dict(color=self.theme['primary'], size=6))
-            fig2.update_layout(
-                plot_bgcolor=self.theme['card_bg'],
-                paper_bgcolor=self.theme['background'],
-                font=dict(color=self.theme['text_light']),
-                template=self.dark_template,
-                height=400
-            )
+        if 'event_dates' in data.columns:
+            try:
+                # Extract month from event dates
+                data_copy = data.copy()
+                data_copy['event_dates'] = pd.to_datetime(data_copy['event_dates'], errors='coerce')
+                data_copy = data_copy.dropna(subset=['event_dates'])
+                data_copy['month'] = data_copy['event_dates'].dt.month
+                
+                monthly_participation = data_copy['month'].value_counts().sort_index()
+                
+                fig2 = px.line(
+                    x=monthly_participation.index,
+                    y=monthly_participation.values,
+                    title='<b>Seasonal Participation Pattern</b>',
+                    labels={'x': 'Month', 'y': 'Participants'}
+                )
+                fig2.update_traces(line=dict(color=_self.theme['secondary'], width=3),
+                                  marker=dict(color=_self.theme['primary'], size=6))
+                fig2.update_layout(
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
+                    height=400
+                )
+            except:
+                fig2 = _self._create_empty_chart("Seasonal data unavailable")
         else:
-            fig2 = self._create_empty_chart("Seasonal data unavailable")
+            fig2 = _self._create_empty_chart("Seasonal data unavailable")
         
         return fig1, fig2
     
     def create_correlation_matrix(self, data):
         """Create correlation matrix heatmap"""
+        return self._cached_create_correlation_matrix(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_correlation_matrix(_self, data):
+        """Cached implementation of correlation matrix"""
         numeric_cols = data.select_dtypes(include=[np.number]).columns
         
         if len(numeric_cols) > 1:
-            corr_matrix = data[numeric_cols].corr()
+            # Use only numeric columns for correlation
+            corr_data = data[numeric_cols].select_dtypes(include=[np.number])
+            corr_matrix = corr_data.corr()
             
             fig = go.Figure(data=go.Heatmap(
                 z=corr_matrix.values,
@@ -725,7 +909,9 @@ class VisualizationEngine:
                 colorscale='RdBu_r',
                 zmid=0,
                 hoverongaps=False,
-                hoverinfo='z'
+                hoverinfo='z',
+                text=corr_matrix.round(2).values,
+                texttemplate='%{text}'
             ))
             
             fig.update_layout(
@@ -733,46 +919,175 @@ class VisualizationEngine:
                 height=500,
                 xaxis_title='Features',
                 yaxis_title='Features',
-                plot_bgcolor=self.theme['card_bg'],
-                paper_bgcolor=self.theme['background'],
-                font=dict(color=self.theme['text_light'])
+                plot_bgcolor=_self.theme['card_bg'],
+                paper_bgcolor=_self.theme['background'],
+                font=dict(color=_self.theme['text_light'])
             )
             
             return fig
         else:
-            return self._create_empty_chart("Insufficient numeric data for correlation analysis")
+            return _self._create_empty_chart("Insufficient numeric data for correlation analysis")
     
     def create_athlete_segmentation(self, data):
         """Create athlete segmentation analysis"""
+        return self._cached_create_athlete_segmentation(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_athlete_segmentation(_self, data):
+        """Cached implementation of athlete segmentation"""
         if 'age' in data.columns and 'athlete_average_speed' in data.columns:
             plot_data = data.dropna(subset=['age', 'athlete_average_speed'])
             
             if len(plot_data) > 100:
+                # Sample data for better performance
+                if len(plot_data) > 2000:
+                    plot_data = plot_data.sample(2000, random_state=42)
+                
                 fig = px.scatter(
-                    plot_data.sample(1000) if len(plot_data) > 1000 else plot_data,
+                    plot_data,
                     x='age',
                     y='athlete_average_speed',
                     title='<b>Athlete Performance Segmentation</b>',
                     color='performance_tier' if 'performance_tier' in data.columns else None,
                     size='event_distance/length' if 'event_distance/length' in data.columns else None,
                     hover_data=['age_group'] if 'age_group' in data.columns else None,
-                    color_discrete_sequence=[self.theme['primary'], self.theme['secondary'],
-                                           self.theme['success'], self.theme['warning']]
+                    color_discrete_sequence=[_self.theme['primary'], _self.theme['secondary'],
+                                           _self.theme['success'], _self.theme['warning']],
+                    opacity=0.7
                 )
                 
                 fig.update_layout(
                     height=500,
-                    plot_bgcolor=self.theme['card_bg'],
-                    paper_bgcolor=self.theme['background'],
-                    font=dict(color=self.theme['text_light']),
-                    template=self.dark_template,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
                     xaxis_title='Age',
                     yaxis_title='Average Speed (km/h)'
                 )
                 
                 return fig
         
-        return self._create_empty_chart("Insufficient data for segmentation analysis")
+        return _self._create_empty_chart("Insufficient data for segmentation analysis")
+    
+    def create_event_analysis(self, data):
+        """Create comprehensive event analysis"""
+        return self._cached_create_event_analysis(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_event_analysis(_self, data):
+        """Cached implementation of event analysis"""
+        # Top events by participation
+        if 'event_name' in data.columns:
+            event_popularity = data['event_name'].value_counts().head(10).reset_index()
+            event_popularity.columns = ['Event', 'Participants']
+            
+            fig1 = px.bar(
+                event_popularity,
+                x='Participants',
+                y='Event',
+                orientation='h',
+                title='<b>Top 10 Most Popular Events</b>',
+                color='Participants',
+                color_continuous_scale='Viridis'
+            )
+            fig1.update_layout(
+                height=500,
+                plot_bgcolor=_self.theme['card_bg'],
+                paper_bgcolor=_self.theme['background'],
+                font=dict(color=_self.theme['text_light']),
+                template=_self.dark_template
+            )
+        else:
+            fig1 = _self._create_empty_chart("Event data unavailable")
+        
+        # Event distance distribution
+        if 'event_distance/length' in data.columns:
+            distance_data = data.dropna(subset=['event_distance/length'])
+            if not distance_data.empty:
+                fig2 = px.histogram(
+                    distance_data,
+                    x='event_distance/length',
+                    title='<b>Event Distance Distribution</b>',
+                    nbins=20,
+                    color_discrete_sequence=[_self.theme['primary']]
+                )
+                fig2.update_layout(
+                    height=400,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template,
+                    xaxis_title="Distance (km)",
+                    yaxis_title="Number of Events"
+                )
+            else:
+                fig2 = _self._create_empty_chart("Distance data unavailable")
+        else:
+            fig2 = _self._create_empty_chart("Distance data unavailable")
+        
+        return fig1, fig2
+    
+    def create_athlete_demographics(self, data):
+        """Create athlete demographic analysis"""
+        return self._cached_create_athlete_demographics(data)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _cached_create_athlete_demographics(_self, data):
+        """Cached implementation of athlete demographics"""
+        # Age category distribution
+        if 'athlete_age_category' in data.columns:
+            age_cat_data = data.dropna(subset=['athlete_age_category'])
+            if not age_cat_data.empty:
+                age_cat_counts = age_cat_data['athlete_age_category'].value_counts()
+                
+                fig1 = px.pie(
+                    values=age_cat_counts.values,
+                    names=age_cat_counts.index,
+                    title='<b>Age Category Distribution</b>',
+                    color_discrete_sequence=px.colors.sequential.Viridis
+                )
+                fig1.update_layout(
+                    height=500,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template
+                )
+            else:
+                fig1 = _self._create_empty_chart("Age category data unavailable")
+        else:
+            fig1 = _self._create_empty_chart("Age category data unavailable")
+        
+        # Club participation
+        if 'athlete_club' in data.columns:
+            club_data = data.dropna(subset=['athlete_club'])
+            if not club_data.empty:
+                top_clubs = club_data['athlete_club'].value_counts().head(10).reset_index()
+                top_clubs.columns = ['Club', 'Participants']
+                
+                fig2 = px.bar(
+                    top_clubs,
+                    x='Participants',
+                    y='Club',
+                    orientation='h',
+                    title='<b>Top 10 Clubs by Participation</b>',
+                    color='Participants',
+                    color_continuous_scale='Plasma'
+                )
+                fig2.update_layout(
+                    height=500,
+                    plot_bgcolor=_self.theme['card_bg'],
+                    paper_bgcolor=_self.theme['background'],
+                    font=dict(color=_self.theme['text_light']),
+                    template=_self.dark_template
+                )
+            else:
+                fig2 = _self._create_empty_chart("Club data unavailable")
+        else:
+            fig2 = _self._create_empty_chart("Club data unavailable")
+        
+        return fig1, fig2
     
     def _create_empty_chart(self, message):
         """Create placeholder for missing data"""
@@ -935,6 +1250,14 @@ def apply_enterprise_styling():
         .sidebar .sidebar-content {
             background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
         }
+        
+        /* Performance optimizations */
+        .element-container {
+            transform: translateZ(0);
+        }
+        .stPlotlyChart {
+            border-radius: 10px;
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -954,7 +1277,8 @@ def create_enterprise_sidebar():
         st.markdown("### 🧭 NAVIGATION")
         page = st.radio("Select Dashboard", 
                        ["Executive Overview", "Advanced Analytics", "Performance Metrics", 
-                        "Geographic Intelligence", "Temporal Analysis", "ML Insights", "Data Management"])
+                        "Geographic Intelligence", "Temporal Analysis", "Event Analysis", 
+                        "Athlete Demographics", "ML Insights", "Data Management"])
         
         st.markdown("---")
         
@@ -971,7 +1295,7 @@ def create_enterprise_sidebar():
         analysis_focus = st.selectbox(
             "🎯 Primary Focus",
             ["Overall Performance", "Demographic Trends", "Geographic Distribution", 
-             "Event Analysis", "Athlete Segmentation", "Temporal Patterns"]
+             "Event Analysis", "Athlete Segmentation", "Temporal Patterns", "Club Performance"]
         )
         
         st.markdown("---")
@@ -1042,9 +1366,22 @@ def calculate_enterprise_kpis(data):
             kpis['min_distance'] = distance_data.min()
             kpis['distance_quartiles'] = distance_data.quantile([0.25, 0.5, 0.75]).to_dict()
     
-    # Geographic metrics
-    if 'event_country' in data.columns:
-        kpis['countries'] = data['event_country'].nunique()
+    # Enhanced Geographic metrics - using athlete_country
+    kpis['countries'] = 0
+    kpis['top_country'] = "N/A"
+    
+    if 'athlete_country' in data.columns:
+        country_data = data['athlete_country'].dropna()
+        if not country_data.empty:
+            kpis['countries'] = country_data.nunique()
+            kpis['top_country'] = country_data.mode()[0] if not country_data.mode().empty else "N/A"
+    
+    # Club metrics
+    if 'athlete_club' in data.columns:
+        club_data = data['athlete_club'].dropna()
+        if not club_data.empty:
+            kpis['total_clubs'] = club_data.nunique()
+            kpis['top_club'] = club_data.mode()[0] if not club_data.mode().empty else "N/A"
     
     # Data quality metrics
     kpis['completeness'] = (1 - data.isnull().sum().sum() / (len(data) * len(data.columns))) * 100
@@ -1177,16 +1514,6 @@ def main():
             """, unsafe_allow_html=True)
         
         with col7:
-            date_range = kpis.get('date_range', 'N/A')
-            st.markdown(f"""
-                <div class="kpi-card-enterprise">
-                    <div class="kpi-title-enterprise">📆 DATA RANGE</div>
-                    <div class="kpi-value-enterprise">{date_range}</div>
-                    <div class="kpi-subtitle-enterprise">Historical Coverage</div>
-                </div>
-            """, unsafe_allow_html=True)
-        
-        with col8:
             countries = kpis.get('countries', 0)
             countries_display = f"{countries:,}" if countries > 0 else "N/A"
             st.markdown(f"""
@@ -1194,6 +1521,17 @@ def main():
                     <div class="kpi-title-enterprise">🌍 COUNTRIES</div>
                     <div class="kpi-value-enterprise">{countries_display}</div>
                     <div class="kpi-subtitle-enterprise">Global Reach</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col8:
+            total_clubs = kpis.get('total_clubs', 0)
+            clubs_display = f"{total_clubs:,}" if total_clubs > 0 else "N/A"
+            st.markdown(f"""
+                <div class="kpi-card-enterprise">
+                    <div class="kpi-title-enterprise">🏢 TOTAL CLUBS</div>
+                    <div class="kpi-value-enterprise">{clubs_display}</div>
+                    <div class="kpi-subtitle-enterprise">Organization Network</div>
                 </div>
             """, unsafe_allow_html=True)
         
@@ -1258,7 +1596,7 @@ def main():
         st.markdown('<div class="section-header">🌍 GEOGRAPHIC INTELLIGENCE DASHBOARD</div>', unsafe_allow_html=True)
         
         # Geographic KPIs
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         
         with col1:
             st.markdown(f"""
@@ -1269,18 +1607,17 @@ def main():
             """, unsafe_allow_html=True)
         
         with col2:
-            if 'event_country' in filtered_data.columns:
-                top_country = filtered_data['event_country'].value_counts().index[0] if not filtered_data['event_country'].value_counts().empty else "N/A"
-                st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-title">Top Country</div>
-                        <div class="metric-value">{top_country}</div>
-                    </div>
-                """, unsafe_allow_html=True)
+            top_country = kpis.get('top_country', 'N/A')
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Most Active Country</div>
+                    <div class="metric-value">{top_country}</div>
+                </div>
+            """, unsafe_allow_html=True)
         
         with col3:
-            if 'event_country' in filtered_data.columns:
-                country_diversity = filtered_data['event_country'].nunique()
+            if 'athlete_country' in filtered_data.columns:
+                country_diversity = filtered_data['athlete_country'].nunique()
                 st.markdown(f"""
                     <div class="metric-card">
                         <div class="metric-title">Geographic Diversity</div>
@@ -1288,53 +1625,204 @@ def main():
                     </div>
                 """, unsafe_allow_html=True)
         
+        with col4:
+            if 'athlete_country' in filtered_data.columns:
+                total_participations = len(filtered_data)
+                st.markdown(f"""
+                    <div class="metric-card">
+                        <div class="metric-title">Global Events</div>
+                        <div class="metric-value">{total_participations:,}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+        
         # Geographic Charts
         st.markdown('<div class="subsection-header">🗺️ Global Participation Analysis</div>', unsafe_allow_html=True)
-        fig1, fig2, fig3 = viz_engine.create_geographic_intelligence(filtered_data)
+        fig1, fig2, fig3, fig4 = viz_engine.create_geographic_intelligence(filtered_data)
         
         st.plotly_chart(fig1, use_container_width=True, key="global_heatmap")
         
-        col4, col5 = st.columns(2)
-        with col4:
-            st.plotly_chart(fig2, use_container_width=True, key="top_countries")
+        col5, col6 = st.columns(2)
         with col5:
+            st.plotly_chart(fig2, use_container_width=True, key="top_countries")
+        with col6:
             st.plotly_chart(fig3, use_container_width=True, key="country_performance")
+        
+        # Regional Analysis
+        st.markdown('<div class="subsection-header">🌐 Regional Performance Comparison</div>', unsafe_allow_html=True)
+        st.plotly_chart(fig4, use_container_width=True, key="regional_analysis")
+        
+        # Geographic Insights
+        st.markdown('<div class="subsection-header">💡 Geographic Insights</div>', unsafe_allow_html=True)
+        
+        if 'athlete_country' in filtered_data.columns:
+            col7, col8 = st.columns(2)
+            
+            with col7:
+                st.info("**🌍 Global Distribution**")
+                country_stats = filtered_data['athlete_country'].value_counts()
+                st.write(f"- **Top 3 Countries**: {', '.join(country_stats.head(3).index.tolist())}")
+                st.write(f"- **Total Unique Countries**: {country_stats.shape[0]}")
+                st.write(f"- **Events in Top Country**: {country_stats.iloc[0]:,}")
+            
+            with col8:
+                st.success("**🚀 Performance by Region**")
+                if 'athlete_average_speed' in filtered_data.columns:
+                    speed_by_country = filtered_data.groupby('athlete_country')['athlete_average_speed'].mean()
+                    fastest_country = speed_by_country.idxmax() if not speed_by_country.empty else "N/A"
+                    fastest_speed = speed_by_country.max() if not speed_by_country.empty else "N/A"
+                    st.write(f"- **Fastest Country**: {fastest_country} ({fastest_speed:.1f} km/h)")
+                    st.write(f"- **Global Speed Range**: {speed_by_country.min():.1f} - {speed_by_country.max():.1f} km/h")
     
     # ADVANCED ANALYTICS PAGE
     elif page == "Advanced Analytics":
         st.markdown('<div class="section-header">🔬 ADVANCED ANALYTICS</div>', unsafe_allow_html=True)
         
+        # Performance optimization: Use columns with cached charts
         col1, col2 = st.columns(2)
         with col1:
-            fig1, fig2 = viz_engine.create_advanced_analytics(filtered_data)
-            st.plotly_chart(fig1, use_container_width=True, key="age_performance")
+            with st.spinner('Loading age performance analysis...'):
+                fig1, fig2 = viz_engine.create_advanced_analytics(filtered_data)
+                st.plotly_chart(fig1, use_container_width=True, key="age_performance")
         with col2:
-            st.plotly_chart(fig2, use_container_width=True, key="event_difficulty")
+            with st.spinner('Loading event difficulty analysis...'):
+                st.plotly_chart(fig2, use_container_width=True, key="event_difficulty")
         
-        # Additional advanced analytics
+        # Additional advanced analytics with loading states
         st.markdown('<div class="subsection-header">📊 Correlation Analysis</div>', unsafe_allow_html=True)
-        corr_fig = viz_engine.create_correlation_matrix(filtered_data)
-        st.plotly_chart(corr_fig, use_container_width=True, key="correlation_matrix")
+        with st.spinner('Generating correlation matrix...'):
+            corr_fig = viz_engine.create_correlation_matrix(filtered_data)
+            st.plotly_chart(corr_fig, use_container_width=True, key="correlation_matrix")
         
         st.markdown('<div class="subsection-header">🎯 Athlete Segmentation</div>', unsafe_allow_html=True)
-        segmentation_fig = viz_engine.create_athlete_segmentation(filtered_data)
-        st.plotly_chart(segmentation_fig, use_container_width=True, key="athlete_segmentation")
+        with st.spinner('Creating athlete segmentation...'):
+            segmentation_fig = viz_engine.create_athlete_segmentation(filtered_data)
+            st.plotly_chart(segmentation_fig, use_container_width=True, key="athlete_segmentation")
     
     # TEMPORAL ANALYSIS PAGE
     elif page == "Temporal Analysis":
         st.markdown('<div class="section-header">⏰ TEMPORAL ANALYSIS</div>', unsafe_allow_html=True)
         
         st.markdown('<div class="subsection-header">📈 Time Series Analysis</div>', unsafe_allow_html=True)
-        fig1, fig2 = viz_engine.create_temporal_analysis(filtered_data)
+        with st.spinner('Loading temporal trends...'):
+            fig1, fig2 = viz_engine.create_temporal_analysis(filtered_data)
+            st.plotly_chart(fig1, use_container_width=True, key="temporal_trends")
+            st.plotly_chart(fig2, use_container_width=True, key="seasonal_patterns")
+    
+    # EVENT ANALYSIS PAGE
+    elif page == "Event Analysis":
+        st.markdown('<div class="section-header">🎯 EVENT ANALYSIS DASHBOARD</div>', unsafe_allow_html=True)
         
-        st.plotly_chart(fig1, use_container_width=True, key="temporal_trends")
-        st.plotly_chart(fig2, use_container_width=True, key="seasonal_patterns")
+        # Event KPIs
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Total Events</div>
+                    <div class="metric-value">{kpis.get('total_events', 0):,}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            avg_dist = kpis.get('avg_distance', 0)
+            dist_display = f"{avg_dist:.1f} km" if avg_dist > 0 else "N/A"
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Average Distance</div>
+                    <div class="metric-value">{dist_display}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            max_dist = kpis.get('max_distance', 0)
+            max_display = f"{max_dist:.1f} km" if max_dist > 0 else "N/A"
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Longest Event</div>
+                    <div class="metric-value">{max_display}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            min_dist = kpis.get('min_distance', 0)
+            min_display = f"{min_dist:.1f} km" if min_dist > 0 else "N/A"
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Shortest Event</div>
+                    <div class="metric-value">{min_display}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        # Event Charts
+        st.markdown('<div class="subsection-header">📊 Event Analysis</div>', unsafe_allow_html=True)
+        fig1, fig2 = viz_engine.create_event_analysis(filtered_data)
+        
+        col5, col6 = st.columns(2)
+        with col5:
+            st.plotly_chart(fig1, use_container_width=True, key="event_popularity")
+        with col6:
+            st.plotly_chart(fig2, use_container_width=True, key="event_distance_dist")
+    
+    # ATHLETE DEMOGRAPHICS PAGE
+    elif page == "Athlete Demographics":
+        st.markdown('<div class="section-header">👥 ATHLETE DEMOGRAPHICS DASHBOARD</div>', unsafe_allow_html=True)
+        
+        # Demographic KPIs
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Average Age</div>
+                    <div class="metric-value">{kpis.get('avg_age', 0):.1f} yrs</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            male_pct = kpis.get('male_percentage', 0)
+            gender_display = f"{male_pct:.1f}% Male" if male_pct > 0 else "N/A"
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Gender Ratio</div>
+                    <div class="metric-value">{gender_display}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            total_clubs = kpis.get('total_clubs', 0)
+            clubs_display = f"{total_clubs:,}" if total_clubs > 0 else "N/A"
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Total Clubs</div>
+                    <div class="metric-value">{clubs_display}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            top_club = kpis.get('top_club', 'N/A')
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Most Active Club</div>
+                    <div class="metric-value">{top_club}</div>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        # Demographic Charts
+        st.markdown('<div class="subsection-header">📊 Demographic Analysis</div>', unsafe_allow_html=True)
+        fig1, fig2 = viz_engine.create_athlete_demographics(filtered_data)
+        
+        col5, col6 = st.columns(2)
+        with col5:
+            st.plotly_chart(fig1, use_container_width=True, key="age_category_dist")
+        with col6:
+            st.plotly_chart(fig2, use_container_width=True, key="club_participation")
     
     # ML INSIGHTS PAGE
     elif page == "ML Insights" and ml_insights:
         st.markdown('<div class="section-header">🤖 MACHINE LEARNING INSIGHTS</div>', unsafe_allow_html=True)
         
-        insights = DataEngine.get_ml_insights(filtered_data)
+        with st.spinner('Generating AI insights...'):
+            insights = DataEngine.get_ml_insights(filtered_data)
         
         col1, col2 = st.columns(2)
         
@@ -1346,6 +1834,10 @@ def main():
             st.markdown("### 🔮 Predictive Insights")
             for insight in insights.get('participation_forecast', []):
                 st.success(f"🎯 {insight}")
+            
+            st.markdown("### 🤖 ML Predictions")
+            for insight in insights.get('performance_prediction', []):
+                st.warning(f"🧠 {insight}")
         
         with col2:
             st.markdown("### 🎯 Demographic Intelligence")
@@ -1363,6 +1855,31 @@ def main():
     # DATA MANAGEMENT PAGE
     elif page == "Data Management":
         st.markdown('<div class="section-header">💾 ENTERPRISE DATA MANAGEMENT</div>', unsafe_allow_html=True)
+        
+        # Dataset Diagnostics
+        st.markdown("### 🔍 Dataset Diagnostics")
+        with st.expander("View Dataset Structure", expanded=True):
+            if data is not None:
+                st.write("**Dataset Overview:**")
+                st.write(f"- Total records: {len(data):,}")
+                st.write(f"- Columns: {len(data.columns)}")
+                st.write("**Available Columns:**")
+                st.write(list(data.columns))
+                
+                st.write("**Sample Data (first 5 rows):**")
+                st.dataframe(data.head())
+                
+                # Check for specific columns
+                st.write("**Data Availability Check:**")
+                important_columns = ['year_of_event', 'event_name', 'event_distance/length', 
+                                   'athlete_country', 'athlete_average_speed', 'age']
+                
+                for col in important_columns:
+                    if col in data.columns:
+                        non_null = data[col].notna().sum()
+                        st.success(f"✅ **{col}**: {non_null:,} non-null values ({non_null/len(data)*100:.1f}%)")
+                    else:
+                        st.error(f"❌ **{col}**: Column not found")
         
         col1, col2 = st.columns(2)
         
