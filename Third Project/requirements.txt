@@ -1,0 +1,24 @@
+# =============================================
+# Enterprise Customer Intelligence Platform
+# Core Dependencies Only
+# =============================================
+
+# Web Application Framework
+streamlit
+
+# Data Manipulation & Analysis
+pandas
+numpy
+
+# Machine Learning & Clustering
+scikit-learn
+
+# Data Visualization
+matplotlib
+seaborn
+
+# Scientific Computing
+scipy
+
+# Model Persistence
+joblib

@@ -1,0 +1,604 @@
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:21,653 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:48,513 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:53,964 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:55,424 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.00s
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:01:56,605 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:05,884 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 0.01s
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:23,447 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:02:30,482 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.05s
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:04:55,985 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:00,827 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.85s
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:04,138 - EnterprisePlatform - INFO - OPERATION: file_upload | STATUS: success | DETAILS: Uploaded 440 records
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:05:09,725 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.60s
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:12:24,365 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: failed | DETAILS: DataManager.check_customers_file() missing 1 required positional argument: '_self'
+2025-10-21 20:30:46,155 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:30:46,155 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:30:46,155 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:30:46,155 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:30:46,155 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:30:46,155 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:30:52,763 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.09s
+2025-10-21 20:30:52,763 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.09s
+2025-10-21 20:30:52,763 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.09s
+2025-10-21 20:30:52,763 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.09s
+2025-10-21 20:30:52,763 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.09s
+2025-10-21 20:30:52,763 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 7.09s
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:04,785 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-21 20:32:09,475 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 4.70s
+2025-10-22 19:47:51,575 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:47:51,575 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:47:51,575 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:47:51,575 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:47:51,575 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:47:51,575 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:48:01,565 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 10.88s
+2025-10-22 19:48:01,565 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 10.88s
+2025-10-22 19:48:01,565 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 10.88s
+2025-10-22 19:48:01,565 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 10.88s
+2025-10-22 19:48:01,565 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 10.88s
+2025-10-22 19:48:01,565 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 10.88s
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:06,740 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:08,314 - EnterprisePlatform - INFO - OPERATION: file_validation | STATUS: success | DETAILS: Loaded 440 records
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
+2025-10-22 19:51:14,236 - EnterprisePlatform - INFO - OPERATION: platform_execution | STATUS: completed | DETAILS: Execution time: 5.94s
